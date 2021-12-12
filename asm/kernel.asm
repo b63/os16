@@ -17,6 +17,8 @@
 	.global _resetSegments
         .global _loadWordKernel
         .global _loadCharKernel
+        .global _disableInterrupts
+        .global _restoreInterrupts
 
 ;void putInMemory (int segment, int address, char character)
 _putInMemory:
@@ -222,6 +224,22 @@ _returnFromTimer:
         ;enable interrupts and return
         sti
         iret
+
+; disable maskable interrupts
+_disableInterrupts:
+    pop bx  ; save ret address
+    pushf   ; save old flags
+    cli     ; clear IF flag
+    push bx ; push ret address
+    ret
+
+; restore maskable Interrupts that were disabled by 
+; disableInterrupts()
+_restoreInterrupts:
+    pop bx  ; save ret addres
+    popf    ; restore flags
+    push bx ; restore same ret address
+    ret
 
 ;void initializeProgram(int segment)
 ;this initializes a new program but doesn't start it running

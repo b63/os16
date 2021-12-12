@@ -20,9 +20,15 @@ int sleep(int time)
 }
 
 
-int showProcesses()
+int show_processes()
 {
     return interrupt(0x21, 0x0a, 0, 0, 0);;
+}
+
+
+int put_str(char *ptr, char color, int row, int col)
+{
+    return interrupt(0x21, 0xff, ptr, color, (row << 8) | (col & 0xff)); 
 }
 
 
@@ -59,9 +65,9 @@ int read_disk_dir(char *buffer)
 }
 
 // call interrupt with right arguments
-int execute(char *file, int seg)
+int execute(char *file, int blockopt)
 { 
-    return interrupt(0x21, 0x04, file, seg, 0); 
+    return interrupt(0x21, 0x04, file, blockopt, 0); 
 }
 
 // call interrupt with right arguments
@@ -129,4 +135,77 @@ int print_int(int x)
 
     // print the digits to the screen
     return print_string(ptr);
+}
+
+
+/**
+ * Prints the given integer in base 10 to the given buffer.
+ *    x        the integer to print to screen
+ *    dst      buffe rto write to
+ *    n        maximum size of buffer
+ * Return: maximum number of characters written.
+ */
+int sprintInt(int x, char *dst, int n)
+{
+    // should be enough to hold 32-bit ints
+    char buf[12];
+    char *ptr = buf+11; // point to end of buf
+    int q, r; // quotient, remainder
+    int sign = 1; // default positive
+
+    // null terminate buf
+    *ptr = 0;
+    // check sign
+    if (x < 0)
+    {
+        // note down as negative and make positive (could overflow but who cares YOLO)
+        sign = -1;
+        x = -x;
+    }
+    else if (x == 0)
+    {
+        // x is zero so write digit 0 and skidaddle 
+        *(--ptr) = '0';
+    }
+
+    // go until x is zero
+    while (x > 0)
+    {
+        // get digit in ones place
+        q = x/10;
+        r = x - q*10;
+        // write the digit to appropriate place
+        *(--ptr) = r + '0';
+        x = q;
+    }
+
+    if (sign < 0)
+    {
+        // if it was negative add in the sign
+        *(--ptr) = '-';
+    }
+
+    strcpyn(dst, n, ptr);
+    r = (buf+11) - ptr;
+
+    return  n-1 < r ? n-1 : r;
+}
+
+
+/**
+ * Copy at most n-1 bytes to buffer from null-terminated string src.
+ * dst will be null-terminated.
+ *   dst   destination buffer
+ *   n     size of dst
+ *   src   source buffer
+ *  Returns: the number of bytes copied from src to dst
+ */
+int strcpyn(char *dst, int n, char *src)
+{
+    char *ptr = dst;
+    while (*src && --n)
+        *(ptr++) = *(src++);
+    *ptr = 0;
+
+    return ptr - dst;
 }

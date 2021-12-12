@@ -1,6 +1,10 @@
 #ifndef USER_LIB
 #define USER_LIB
 
+#define WIDTH   80
+#define HEIGHT  25
+#define CHAR_COLOR(FG,BG) ((BG << 4) | (FG & 0x7))
+
 /**
  * Prints the characters starting from the address
  * pointed to by str till a null is reached.
@@ -50,10 +54,10 @@ int read_string(char*, int);
 int read_file(char*, char*, int);
 
 /**
- * Reads file same name and loads it into given segment.
- *   name     char* to name of file
- *   segment  highest hex digit of mem-addr times 2^12
- * Returns: -2 if invalid segment, -1 if file not found, -3 if not executable
+ * Reads file same name and loads it into free segment.
+ *   name      char* to name of file
+ *   blockopt  whether to block running process until spawned one is done
+ * Returns: -2 if no free segment, -1 if file not found, -3 if not executable
  */
 int execute(char*, int);
 
@@ -100,8 +104,16 @@ int kill(int segment);
 int sleep(int time);
 
 // diplay list of processes
-int showProcesses();
+int show_processes();
 
+// put string starting at row and col
+int put_str(char *ptr, char color, int row, int col);
+
+// write int to dst buffer
+int sprintInt(int x, char *dst, int n);
+
+// copy string from one buf to another
+int strcpyn(char *dst, int n, char *src);
 
 // enable ignorable interrupts
 extern void enableInterrupts();

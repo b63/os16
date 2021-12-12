@@ -31,9 +31,15 @@ struct sleep_info_t {
     int current;
 };
 
+// holds information about processes in BLOCKED state
+struct block_info_t {
+    int wait_pseg; // blocked until process with this segment index is done
+};
+
 // holds extra state-depenent information
-struct state_info_t {
+union state_info_t {
     struct sleep_info_t sleep_info;
+    struct block_info_t block_info;
 };
 
 /*
@@ -44,7 +50,7 @@ struct PCB {
 	int state;		// One of the constants above.
 	int segment;		// memory segment occupied by the process.
 	int stackPointer;	// address of the stack pointer for the process.
-        struct state_info_t state_info; // extra information -- exactly what depends on current state
+        union state_info_t state_info; // extra information -- exactly what depends on current state
 	
 	/*
 	 * Pointers to allow PCB's to be stored in doubly linked lists.

@@ -26,7 +26,7 @@ echo -e '\nCompiling/Linking loadFile'
 g++ "-I$INC" -std=c++11 $SRC/loadFile.cpp -o $BIN/loadFile 
 
 echo -e '\nCompiling ...'
-bcc "-I$INC" -ansi -c -o $BUILD/kernel.o       $SRC/kernel.c
+bcc "-I$INC" -ansi -c -o $BUILD/kernel.o       $SRC/kernel.c -A-s "-A$BUILD/kernelc.sym"
 bcc "-I$INC" -ansi -S -o $ASM/kernelc.asm -C-t $SRC/kernel.c
 bcc "-I$INC" -ansi -c -o $BUILD/uprog1.o       $SRC/uprog1.c 
 bcc "-I$INC" -ansi -c -o $BUILD/uprog2.o       $SRC/uprog2.c 
@@ -56,6 +56,19 @@ function insert_bytes () {
     echo -e "=> $1"
 }
 
+# route to check and warn if file size more than n sectors
+function check_size () {
+    maxsectors=$2
+    size=`wc -c "$1" | cut -d ' ' -f 1`
+    if (( $size > 512*$maxsectors )); then
+        sectors=$(($size/512))
+        rem=$(($size-$sectors*512))
+
+        printf "\033[33;1;4mWARNING\033[0m $1 is larger than $maxsectors sectors:" 
+        printf " $sectors sectors $rem bytes, total $size bytes\n"
+    fi
+}
+
 
 echo -e '\nInserting magic bytes ...'
 insert_bytes $BIN/shell
@@ -71,6 +84,8 @@ echo -e '=> bootloader'
 dd if=$BUILD/bootload of=$IMG/floppya.img bs=512 count=1 conv=notrunc seek=0 > /dev/null 2>&1
 
 echo -e '=> kernel'
+# note: kernel is more that 10 sectors big, bootload.asm loads more now
+check_size "$BIN/kernel" 10
 dd if=$BIN/kernel      of=$IMG/floppya.img bs=512 conv=notrunc seek=3 > /dev/null 2>&1
 
 echo -e '=> map.img'
@@ -79,17 +94,25 @@ dd if=$IMG/map.img     of=$IMG/floppya.img bs=512 count=1 seek=1 conv=notrunc > 
 echo -e '=> dir.img'
 dd if=$IMG/dir.img     of=$IMG/floppya.img bs=512 count=1 seek=2 conv=notrunc > /dev/null 2>&1
 
+
 echo -e '\nWriting to disk...'
 echo -e "=> message.txt"
+check_size "message.txt" 26
 $BIN/loadFile message.txt $IMG/floppya.img
+
 echo -e "=> uprog1"
+check_size "$BIN/uprog1" 26
 $BIN/loadFile $BIN/uprog1 $IMG/floppya.img
+
 echo -e "=> uprog2"
+check_size "$BIN/uprog2" 26
 $BIN/loadFile $BIN/uprog2 $IMG/floppya.img
+
 echo -e "=> shell"
+check_size "$BIN/shell" 26
 $BIN/loadFile $BIN/shell  $IMG/floppya.img
 
 
 if [[ "$1" == "-r" ]]; then
-    bochs -f opsys.bxrc -q
+    bochs -f opsys2.bxrc -q
 fi

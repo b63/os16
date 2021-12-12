@@ -3,6 +3,15 @@
 
 // bhavin k
 // CS 456
+
+// for printing to row/col on the screen
+#define VMEM_HIGH 0xB000
+#define VMEM_LOW 0x8000
+#define WIDTH   80
+#define HEIGHT  25
+#define CHAR_COLOR(FG,BG) ((BG << 4) | (FG & 0x7))
+#define PUTVMEM(OFFSET,CHAR) putInMemory(VMEM_HIGH, VMEM_LOW+OFFSET,CHAR)
+
 #define VREG(HIGH,LOW) ((HIGH) << 8) | ((LOW) &  0xff)
 // bcc is WAY too basic to inline these automatically so...
 #define PUT_CHAR(CHAR) interrupt(0x10, VREG(0x0E, CHAR), 0, 0, 0)
@@ -30,16 +39,23 @@ int bstrcmpn(char *str, char *buf, int n);
 int strcmp(char *a, char *b);
 int memcpyn(char *dst, int m, char *src, int n);
 int strcpyn(char *dst, int n, char *src);
+int strlen(char *str);
+void putChar(char c, char color, int row, int col);
+void putStr(char *str, int maxlen, char color, int row, int col);
+void printw(char *ptr, int w);
+void printintw(int, int w);
 int printStringn(char*,int);
 int printInt(int);
+int sprintInt(int x, char *dst, int n);
 void kStrCopy(char *src, char *dest, int len);
 void update_proc_sleep();
+void update_proc_blocked(int segi);
 
 // syscall routines
 void terminate();
 int writeFile(char *fname, char *buffer, int sectors);
 int deleteFile(char *fname);
-int executeProgram(char *name);
+int executeProgram(char *name, int blockopt);
 int printString(char*);
 int readString(char *buf, int n);
 int readSector(char *buf, int sector);
@@ -49,6 +65,7 @@ void showProcesses();
 void yield();
 int kill(int segment);
 int sleep(int time);
+int block(int segi);
 
 // assembly routines
 extern int loadWordKernel(int addr);
@@ -61,6 +78,8 @@ extern void returnFromTimer(int ds, int ss);
 extern void resetSegments();
 extern void launchProgram(int segment);
 extern void putInMemory(int segment, int offset, char b);
+extern void disableInterrupts();
+extern void enableInterrupts();
 extern int interrupt(char irq, int ax, int bx, int cx, int dx);
 
 int main()
@@ -80,52 +99,61 @@ int main()
     //writeFile("dank", buffer, 1);
     //strcpyn(buffer, 512, "the kernel is gone and i am here");
     //writeFile("KERNEL", buffer, 1);
-    printString("running shell form main\r\n");
     executeProgram("shell");
 
     while(1) {};
 }
 
 
-int kill(int segment)
+// kills the process loaded into given segement index
+int kill(int segi)
 {
 
     struct PCB *pcb;
     int ret = -1;
-    setKernelDataSegment();
 
-    if (segment < 0 || segment > 7)
+    if (segi < 0 || segi > 7)
     {
+        setKernelDataSegment();
         printString("error: no process with segment index ");
-        printInt(segment);
+        printInt(segi);
         printString("\n\r");
+        restoreDataSegment();
         return -1;
     }
 
 
     // iterate through pcb pool
+    setKernelDataSegment();
     pcb = pcbPool;
     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
     {
         if (pcb->state == DEFUNCT) continue;
-        if (SEGMENT_INDEX(pcb->segment) == segment)
+        if (SEGMENT_INDEX(pcb->segment) == segi)
         {
             ret = 1;
             break;
         }
     }
+    restoreDataSegment();
 
     if (ret == -1)
     {
+        setKernelDataSegment();
         printString("error: no process with segment index ");
-        printInt(segment);
+        printInt(segi);
         printString("\n\r");
+        restoreDataSegment();
         return -1;
     }
 
+    setKernelDataSegment();
+
     // remove from ready queue
+    disableInterrupts();
     removeFromQueue(pcb);
-    releaseMemorySegment(SEGMENT_INDEX(pcb->segment));
+    restoreInterrupts();
+    releaseMemorySegment(segi);
 
     // notify
     printString("killed ");
@@ -135,21 +163,28 @@ int kill(int segment)
     // release pcb
     releasePCB(pcb);
 
+    // restore blocked process 
+    update_proc_blocked(segi);
+
     // fire interrupt vector 0x08 if killing currenly running process
     if (running == pcb) {
         yield();
     }
+
     restoreDataSegment();
 
     return ret;
 }
 
 
+// puts running process to sleep for time seconds
+// and yields
 int sleep(int time)
 {
-    struct state_info_t  *state_info;
-    struct sleep_info_t *sleep_info;
+    union  state_info_t  *state_info;
+    struct sleep_info_t  *sleep_info;
 
+    setKernelDataSegment();
     if (running == NULL) // idk
         return 0; 
 
@@ -164,11 +199,80 @@ int sleep(int time)
     // removeFromQueue(running);
     // what if timer interrupts in the middle of this...
     running->state = SLEEPING;
+    restoreDataSegment();
+
     yield();
 
     return 1;
 }
 
+/**
+ * Put running process in BLOCKED state waiting for
+ * the process loaded to segment index segi to finish.
+ *
+ * Note: ds should set to kernel data-segment
+ *
+ * Returns non-zero result if unsucessful.
+ * Returns zero if sucessful.
+ */
+int block(int segi)
+{
+    union  state_info_t  *state_info;
+    struct block_info_t  *block_info;
+
+    if (segi < 0 || segi > 7)
+    {
+        return 1;
+    }
+
+    state_info = &(running->state_info);
+    block_info = &(state_info->block_info);
+
+    block_info->wait_pseg = segi;
+    running->state = BLOCKED;
+
+    return 0;
+}
+
+
+/**
+ * Finds processes that were BLOCKED waiting for process
+ * with given segment index to finish.
+ * Puts those processes back on the queue.
+ */
+void update_proc_blocked(int segi) 
+{
+    union  state_info_t  *state_info;
+    struct block_info_t  *block_info;
+    struct PCB           *pcb;
+
+    if (segi < 0 || segi > 7)
+        return;
+
+    setKernelDataSegment();
+    // iterate through pcb pool
+    pcb = pcbPool;
+    for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
+    {
+        // find blocked processes that were waiting on process
+        // with segment index segi
+        if (pcb->state != BLOCKED )
+            continue;
+        if (pcb->state_info.block_info.wait_pseg != segi)
+            continue;
+        // put it in READY and add to queue
+        pcb->state = READY;
+        addToReady(pcb);
+    }
+    restoreDataSegment();
+}
+
+
+/**
+ * Updates the counter for any sleeping processes.
+ * If any have timed out, then it'll put them back
+ * on the scheduler queue.
+ */
 void update_proc_sleep()
 {
     struct PCB *pcb;
@@ -180,8 +284,10 @@ void update_proc_sleep()
     {
         if (pcb->state != SLEEPING) continue;
         sleep_info = &(pcb->state_info.sleep_info);
+
         // update amount of time slept
         sleep_info->current += SLEEP_TIME;
+
         // check if over time
         if (sleep_info->current >= sleep_info->full)
         {
@@ -193,11 +299,18 @@ void update_proc_sleep()
 }
 
 
+/**
+ * Called to handle interrupt vector 0x08.
+ * Checks for any process ready and starts running them.
+ *     ds   data segment of currently running process
+ *     ss   stack segment of currently running process
+ */
 int handleTimerInterrupt(int ds, int ss)
 {
     struct PCB *pcb;
     int add_to_queue = 0;
 
+    // updaate counter for sleeping processes
     update_proc_sleep();
 
     if (running->state != DEFUNCT)
@@ -206,6 +319,7 @@ int handleTimerInterrupt(int ds, int ss)
         running->stackPointer = ss;
         add_to_queue = (running->state != SLEEPING && running->state != BLOCKED);
 
+        // only add to queue those that are not sleeping or blocked
         if (add_to_queue)
             running->state = READY;
 
@@ -214,13 +328,16 @@ int handleTimerInterrupt(int ds, int ss)
             addToReady(running);
     }
 
+    // get a ready process
     pcb = removeFromReady();
 
+    // use idle if none avaialble
     if (pcb == NULL)
     {
         pcb = &idleProc;
     }
 
+    // start running
     pcb->state = RUNNING;
     running = pcb;
     returnFromTimer(pcb->segment, pcb->stackPointer);
@@ -228,9 +345,14 @@ int handleTimerInterrupt(int ds, int ss)
     return 0;
 }
 
+/**
+ * Prints currenlty running/blocked/sleeping processes
+ * along with the segment index where they are loaded.
+ */
 void showProcesses()
 {
     struct PCB *pcb;
+    int n;
     setKernelDataSegment();
 
     // iterate through pcb pool
@@ -238,14 +360,62 @@ void showProcesses()
     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
     {
         if (pcb->state == DEFUNCT) continue;
-        printString(pcb->name);
-        printString("  ");
-        printInt(SEGMENT_INDEX(pcb->segment));
+        printw(pcb->name, 10);
+        printintw(SEGMENT_INDEX(pcb->segment), 3);
+        printw("", 3);
+
+        switch(pcb->state)
+        {
+            case RUNNING:
+                printw("RUNNING",  10);
+                break;
+            case READY:
+                printw("READY",  10);
+                break;
+            case BLOCKED:
+                printw("BLOCKED",  10);
+                break;
+            case SLEEPING:
+                printw("SLEEPING", 10);
+                break;
+            case STARTING:
+                printw("STARTING",  10);
+                break;
+            default:
+                printw("UNKOWN",   10);
+                break;
+        }
         printString("\n\r");
     }
     restoreDataSegment();
 }
 
+// print w-width fields padded to the right
+void printw(char *ptr, int w)
+{
+    int n = printString(ptr);
+    int diff;
+    if (n < w) {
+        diff = w - n;
+        while (diff-- > 0)
+            PUT_CHAR(' ');
+    }
+}
+
+// print w-width ints padded to the left
+void printintw(int x, int w)
+{
+    char buf[13];
+    int diff;
+    int n = sprintInt(x, buf, 13);
+
+    if (n < w) {
+        diff = w - n;
+        while (diff-- > 0)
+            PUT_CHAR(' ');
+    }
+    printString(buf);
+}
 
 
 /* kStrCopy(char *src, char *dest, int len) copy at most 
@@ -270,29 +440,35 @@ void kStrCopy(char *src, char *dest, int len) {
  */
 void terminate()
 {
+    int segi;
+
     setKernelDataSegment();
+    segi = SEGMENT_INDEX(running->segment);
     // free up segment
-    releaseMemorySegment(SEGMENT_INDEX(running->segment));
+    releaseMemorySegment(segi);
     // release PCB
     releasePCB(running);
     restoreDataSegment();
+    // restore blocked process 
+    update_proc_blocked(segi);
 
-    // wait for timer interrupt
-    while (1){}
+    yield();
 }
 
 /**
- * Reads file same name and loads it into given segment.
- *   name     char* to name of file
- *   segment  highest hex digit of mem-addr times 2^12
- * Returns: -2 if invalid segment, -1 if file not found, -3 if not executable
+ * Reads file same name and loads it into memory at free segemtn.
+ *   name      char* to name of file
+ *   blockopt  whether to block currently running process until the newly
+ *             spawned process quits
+ * Returns: -2 if no free segment, -1 if file not found, -3 if not executable
  */
-int executeProgram(char *name)
+int executeProgram(char *name, int blockopt)
 {
     char buffer[MAX_FILE]; /* the maximum size of a file*/ 
     char magic_num[EXEC_MAGIC_OFFSET+1];
     int k = 0, i = 0;
     int ret = 0;
+    int segi;
     int segment;
     struct PCB *pcb;
 
@@ -314,14 +490,15 @@ int executeProgram(char *name)
 
     // get free memory segment to load program
     setKernelDataSegment();
-    segment = getFreeMemorySegment();
+    segi = getFreeMemorySegment();
     restoreDataSegment();
 
-    if (segment == NO_FREE_SEGMENTS)
+    // turn segment index into actual segemnt offset
+    segment = INDEX_SEGMENT(segi);
+
+    if (segi == NO_FREE_SEGMENTS)
         return -2;
 
-    // turn segment index into actual segemnt offset
-    segment = INDEX_SEGMENT(segment);
 
     k = (k << 9);
     for (i = EXEC_MAGIC_OFFSET; i < k; ++i)
@@ -343,10 +520,23 @@ int executeProgram(char *name)
     pcb->state = STARTING;
     pcb->segment = segment;
     pcb->stackPointer = 0xff00;
+
+    // setup stack for segment
+    initializeProgram(segment);
+
+    // put current process in BLOCKED stated if blockopt is true
+    disableInterrupts(); // getting interrupted here will probably screw things up
+    if (blockopt)
+    {
+        block(segi);
+    }
     addToReady(pcb);
+    restoreInterrupts();
+
     restoreDataSegment();
 
-    initializeProgram(segment);
+    if (blockopt)
+        yield();
 
     return 1;
 }
@@ -398,10 +588,10 @@ void yield()
  * executeProgram: load the program into memory and execute it. 
  *  AX: 0x04 
  *  BX: The name of the program to execute. 
+ *  CX: whether to block current process until spawned one is done 
  *  DX: Unused 
  * Return: -1 if the program was not found. -2 if no free segments.
  *         -4 if no PCBs are available.
- *   Note: If the program is found, this system call will never return.
  *
  * terminate: terminate the currently running program, and reload the shell.
  *  AX: 0x05 
@@ -473,6 +663,12 @@ int handleInterrupt21(int ax, int bx, int cx, int dx)
             ret = printString((char*)bx);
             break;
 
+        case 0xff:
+            // putStr syscall
+            putStr((char*)bx, strlen((char*)bx), cx, (dx >> 8) & 0xff, dx & 0xff);
+            ret = 1;
+            break;
+
         case 0xa1:
             // sleep syscall
             ret = sleep(bx);
@@ -511,7 +707,7 @@ int handleInterrupt21(int ax, int bx, int cx, int dx)
 
         case 0x04:
             // executeProgram syscall
-            ret = executeProgram((char*)bx);
+            ret = executeProgram((char*)bx, cx);
             break;
 
         case 0x05:
@@ -983,6 +1179,59 @@ int printInt(int x)
     return printString(ptr);
 }
 
+/**
+ * Prints the given integer in base 10 to the given buffer.
+ *    x        the integer to print to screen
+ *    dst      buffe rto write to
+ *    n        maximum size of buffer
+ * Return: maximum number of characters written.
+ */
+int sprintInt(int x, char *dst, int n)
+{
+    // should be enough to hold 32-bit ints
+    char buf[12];
+    char *ptr = buf+11; // point to end of buf
+    int q, r; // quotient, remainder
+    int sign = 1; // default positive
+
+    // null terminate buf
+    *ptr = 0;
+    // check sign
+    if (x < 0)
+    {
+        // note down as negative and make positive (could overflow but who cares YOLO)
+        sign = -1;
+        x = -x;
+    }
+    else if (x == 0)
+    {
+        // x is zero so write digit 0 and skidaddle 
+        *(--ptr) = '0';
+    }
+
+    // go until x is zero
+    while (x > 0)
+    {
+        // get digit in ones place
+        q = x/10;
+        r = x - q*10;
+        // write the digit to appropriate place
+        *(--ptr) = r + '0';
+        x = q;
+    }
+
+    if (sign < 0)
+    {
+        // if it was negative add in the sign
+        *(--ptr) = '-';
+    }
+
+    strcpyn(dst, n, ptr);
+    r = (buf+11) - ptr;
+
+    return  n-1 < r ? n-1 : r;
+}
+
 
 /**
  * Reads the given sector from floppy disk
@@ -1047,4 +1296,60 @@ int bstrcmpn(char *str, char *buf, int n)
 
     // *a == *b  -> hit end of a or b check that both a AND b end
     return *buf == *str;
+}
+
+/**
+ * Prints character c to the screen at specified row and column with
+ * given color.
+ */
+void putChar(char c, char color, int row, int col) 
+{
+    int offset = ((row * 80 + col) << 1);
+    PUTVMEM(offset, c);
+    PUTVMEM(offset+1, color);
+}
+
+/**
+ * Prints character array str with specified color starting at row and col.
+ * maxlen gives the maximum length of the char arra (will stop if NULL isn't
+ * encountered before then).
+ */
+void putStr(char *str, int maxlen, char color, int row, int col)
+{
+    int i = 0;
+    while(*str && i < maxlen)
+    {
+        if (*str == '\n')
+        {
+            row += 1;
+            col = 0;
+        }
+        else if (*str == '\r')
+        {
+            col = 0;
+        }
+        else 
+        {
+            putChar(*str, color, row, col);
+            if ((++col) >= WIDTH)
+            {
+                ++row;
+                col = 0;
+            }
+        }
+
+        ++str;
+        ++i;
+    }
+}
+
+
+// returns length of null-terminated string
+int strlen(char *str)
+{
+    int n = 0;
+    if (!str) return n;
+
+    while (*str++) n++;
+    return n;
 }

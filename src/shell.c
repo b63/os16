@@ -20,7 +20,7 @@ int atoi(char *str, int *x);
 void copy_command(char *src, char *dst);
 void dir_command();
 void delete_command(char *fname);
-void execute_command(char *fname);
+void execute_command(char *fname, int blockopt);
 void type_command(char *fname);
 
 int main() {
@@ -36,8 +36,8 @@ int main() {
     char arg1[ARG]; 
     // status returned by syscall
     int status;
-    // store parsed int
-    int segment = -1;
+    // store an parsed integers
+    int x = -1;
 
     enableInterrupts();
 
@@ -66,12 +66,13 @@ int main() {
         }
         else if (strcmp(cmd, "execute")) // check if 'execute'
         {
-            if (!*arg) {
-                print_string("execute <name>\n\r");
+            split(arg, arg0, arg1);
+            if (!*arg0 || (*arg1 && !strcmp(arg1, "&"))) 
+            {
+                print_string("execute <name> [&]\n\r");
                 continue;
             }
-
-            execute_command(arg);
+            execute_command(arg0, *arg1 != '&');
         }
         else if (strcmp(cmd, "delete"))
         {
@@ -100,7 +101,7 @@ int main() {
         }
         else if (strcmp(cmd, "ps"))
         {
-            showProcesses();
+            show_processes();
         }
         else if (strcmp(cmd, "kill"))
         {
@@ -111,7 +112,7 @@ int main() {
             }
 
             // try to parse the integer
-            if (atoi(arg, &segment))
+            if (atoi(arg, &x))
             {
                 print_string("error: unable to parse ");
                 print_string(arg);
@@ -119,7 +120,26 @@ int main() {
                 continue;
             }
 
-            kill(segment);
+            kill(x);
+        }
+        else if (strcmp(cmd, "sleep"))
+        {
+            if (!*arg)
+            {
+                print_string("sleep <seconds>\n\r");
+                continue;
+            }
+
+            // try to parse the integer
+            if (atoi(arg, &x))
+            {
+                print_string("error: unable to parse ");
+                print_string(arg);
+                print_string("\n\r");
+                continue;
+            }
+
+            sleep(x);
         }
         else if (*cmd)
         {
@@ -196,14 +216,15 @@ void type_command(char *fname)
 
 /**
  * Implements "execute <name>" shell command.
- *   fname   name of file on disk to load as executable
+ *   fname     name of file on disk to load as executable
+ *   blockopt  whether to block current process
  */
-void execute_command(char *fname)
+void execute_command(char *fname, int blockopt)
 {
     int status;
 
     // try to run the program
-    status = execute(fname);
+    status = execute(fname, blockopt);
     switch(status)
     {
         case -4:
