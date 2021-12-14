@@ -111,132 +111,132 @@
 ! 151  
 ! 152 struct PCB *removeFromQueue();
 !BCC_EOS
-! 153 # 7 "./src/kernel.c"
-! 7 #define VMEM_HIGH 0xB000
-! 8 # 16
-! 16 #define PUT_CHAR(CHAR) interrupt(0x10, ((0x0E) << 8) | (( CHAR) &  0xff) , 0, 0, 0)
-! 17 
+! 153 # 8 "./src/kernel.c"
+! 8 #define VMEM_HIGH 0xB000
+! 9 # 17
+! 17 #define PUT_CHAR(CHAR) interrupt(0x10, ((0x0E) << 8) | (( CHAR) &  0xff) , 0, 0, 0)
 ! 18 
 ! 19 
-! 20 #define MAX_FILE           13312
-! 21 
-! 22 #define EXEC_MAGIC_NUM     "420"
-! 23 
-! 24 #define EXEC_MAGIC_OFFSET  3
-! 25 
-! 26 #define SEGMENT_INDEX(addr) (((addr >> 12) & 0xf)-2)
-! 27 
-! 28 #define INDEX_SEGMENT(index) ((index+2) << 12)
-! 29 
+! 20 
+! 21 #define MAX_FILE           13312
+! 22 
+! 23 #define EXEC_MAGIC_NUM     "420"
+! 24 
+! 25 #define EXEC_MAGIC_OFFSET  3
+! 26 
+! 27 #define SEGMENT_INDEX(addr) (((addr >> 12) & 0xf)-2)
+! 28 
+! 29 #define INDEX_SEGMENT(index) ((index+2) << 12)
 ! 30 
-! 31 #define SLEEP_TIME 1
-! 32 
+! 31 
+! 32 #define SLEEP_TIME 1
 ! 33 
-! 34 int writeSector();
+! 34 
+! 35 int writeSector();
 !BCC_EOS
-! 35 int readFile();
+! 36 int readFile();
 !BCC_EOS
-! 36 int strcmpn();
+! 37 int strcmpn();
 !BCC_EOS
-! 37 int bstrcmpn();
+! 38 int bstrcmpn();
 !BCC_EOS
-! 38 int strcmp();
+! 39 int strcmp();
 !BCC_EOS
-! 39 int memcpyn();
+! 40 int memcpyn();
 !BCC_EOS
-! 40 int strcpyn();
+! 41 int strcpyn();
 !BCC_EOS
-! 41 int strlen();
+! 42 int strlen();
 !BCC_EOS
-! 42 void putChar();
+! 43 void putChar();
 !BCC_EOS
-! 43 void putStr();
+! 44 void putStr();
 !BCC_EOS
-! 44 void printw();
+! 45 void printw();
 !BCC_EOS
-! 45 void printintw();
+! 46 void printintw();
 !BCC_EOS
-! 46 int printStringn();
+! 47 int printStringn();
 !BCC_EOS
-! 47 int printInt();
+! 48 int printInt();
 !BCC_EOS
-! 48 int sprintInt();
+! 49 int sprintInt();
 !BCC_EOS
-! 49 void kStrCopy();
+! 50 void kStrCopy();
 !BCC_EOS
-! 50 void update_proc_sleep();
+! 51 void update_proc_sleep();
 !BCC_EOS
-! 51 void update_proc_blocked();
+! 52 void update_proc_blocked();
 !BCC_EOS
-! 52 
 ! 53 
-! 54 void terminate();
+! 54 
+! 55 void terminate();
 !BCC_EOS
-! 55 int writeFile();
+! 56 int writeFile();
 !BCC_EOS
-! 56 int deleteFile();
+! 57 int deleteFile();
 !BCC_EOS
-! 57 int executeProgram();
+! 58 int executeProgram();
 !BCC_EOS
-! 58 int printString();
+! 59 int printString();
 !BCC_EOS
-! 59 int readString();
+! 60 int readString();
 !BCC_EOS
-! 60 int readSector();
+! 61 int readSector();
 !BCC_EOS
-! 61 int handleInterrupt21();
+! 62 int handleInterrupt21();
 !BCC_EOS
-! 62 int handleTimerInterrupt();
+! 63 int handleTimerInterrupt();
 !BCC_EOS
-! 63 void showProcesses();
+! 64 void showProcesses();
 !BCC_EOS
-! 64 void yield();
+! 65 void yield();
 !BCC_EOS
-! 65 int kill();
+! 66 int kill();
 !BCC_EOS
-! 66 int sleep();
+! 67 int sleep();
 !BCC_EOS
-! 67 int block();
+! 68 int block();
 !BCC_EOS
-! 68 
 ! 69 
-! 70 extern int loadWordKernel();
+! 70 
+! 71 extern int loadWordKernel();
 !BCC_EOS
-! 71 extern int loadCharKernel();
+! 72 extern int loadCharKernel();
 !BCC_EOS
-! 72 extern void setKernelDataSegment();
+! 73 extern void setKernelDataSegment();
 !BCC_EOS
-! 73 extern void restoreDataSegment();
+! 74 extern void restoreDataSegment();
 !BCC_EOS
-! 74 extern void makeInterrupt21();
+! 75 extern void makeInterrupt21();
 !BCC_EOS
-! 75 extern void makeTi
-! 75 merInterrupt();
+! 76 extern void makeTi
+! 76 merInterrupt();
 !BCC_EOS
-! 76 extern void returnFromTimer();
+! 77 extern void returnFromTimer();
 !BCC_EOS
-! 77 extern void resetSegments();
+! 78 extern void resetSegments();
 !BCC_EOS
-! 78 extern void launchProgram();
+! 79 extern void launchProgram();
 !BCC_EOS
-! 79 extern void putInMemory();
+! 80 extern void putInMemory();
 !BCC_EOS
-! 80 extern void disableInterrupts();
+! 81 extern void disableInterrupts();
 !BCC_EOS
-! 81 extern void enableInterrupts();
+! 82 extern void enableInterrupts();
 !BCC_EOS
-! 82 extern int interrupt();
+! 83 extern int interrupt();
 !BCC_EOS
-! 83 
-! 84 int main()
-! 85 {
+! 84 
+! 85 int main()
+! 86 {
 export	_main
 _main:
-! 86     
 ! 87     
 ! 88     
 ! 89     
-! 90     makeInterrupt21(); 
+! 90     
+! 91     makeInterrupt21(); 
 push	bp
 mov	bp,sp
 push	di
@@ -244,23 +244,23 @@ push	si
 ! Debug: func () void = makeInterrupt21+0 (used reg = )
 call	_makeInterrupt21
 !BCC_EOS
-! 91     
-! 92     makeTimerInterrupt();
+! 92     
+! 93     makeTimerInterrupt();
 ! Debug: func () void = makeTimerInterrupt+0 (used reg = )
 call	_makeTimerInterrupt
 !BCC_EOS
-! 93 
-! 94     initializeProcStructures();
+! 94 
+! 95     initializeProcStructures();
 ! Debug: func () void = initializeProcStructures+0 (used reg = )
 call	_initializeProcStructures
 !BCC_EOS
-! 95 
-! 96     
+! 96 
 ! 97     
 ! 98     
 ! 99     
 ! 100     
-! 101     executeProgram("shell");
+! 101     
+! 102     executeProgram("shell");
 ! Debug: list * char = .1+0 (used reg = )
 mov	bx,#.1
 push	bx
@@ -269,34 +269,34 @@ call	_executeProgram
 inc	sp
 inc	sp
 !BCC_EOS
-! 102 
-! 103     while(1) {};
+! 103 
+! 104     while(1) {};
 .4:
 .3:
 jmp	.4
 .5:
 .2:
 !BCC_EOS
-! 104 }
+! 105 }
 pop	si
 pop	di
 pop	bp
 ret
-! 105 
 ! 106 
 ! 107 
-! 108 int kill(segi)
+! 108 
+! 109 int kill(segi)
 ! Register BX used in function main
-! 109 # 108 "./src/kernel.c"
-! 108 int segi;
+! 110 # 109 "./src/kernel.c"
+! 109 int segi;
 export	_kill
 _kill:
 !BCC_EOS
-! 109 {
-! 110 
-! 111     struct PCB *pcb;
+! 110 {
+! 111 
+! 112     struct PCB *pcb;
 !BCC_EOS
-! 112     int ret = -1;
+! 113     int ret = -1;
 push	bp
 mov	bp,sp
 push	di
@@ -306,8 +306,8 @@ add	sp,*-4
 mov	ax,*-1
 mov	-8[bp],ax
 !BCC_EOS
-! 113 
-! 114     if (segi < 0 || segi > 7)
+! 114 
+! 115     if (segi < 0 || segi > 7)
 ! Debug: lt int = const 0 to int segi = [S+$A+2] (used reg = )
 mov	ax,4[bp]
 test	ax,ax
@@ -318,12 +318,12 @@ mov	ax,4[bp]
 cmp	ax,*7
 jle 	.6
 .7:
-! 115     {
-! 116         setKernelDataSegment();
+! 116     {
+! 117         setKernelDataSegment();
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 117         printString("error: no process with segment index ");
+! 118         printString("error: no process with segment index ");
 ! Debug: list * char = .9+0 (used reg = )
 mov	bx,#.9
 push	bx
@@ -332,7 +332,7 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 118         printInt(segi);
+! 119         printInt(segi);
 ! Debug: list int segi = [S+$A+2] (used reg = )
 push	4[bp]
 ! Debug: func () int = printInt+0 (used reg = )
@@ -340,7 +340,7 @@ call	_printInt
 inc	sp
 inc	sp
 !BCC_EOS
-! 119         printString("\n\r");
+! 120         printString("\n\r");
 ! Debug: list * char = .A+0 (used reg = )
 mov	bx,#.A
 push	bx
@@ -349,11 +349,11 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 120         restoreDataSegment();
+! 121         restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 121         return -1;
+! 122         return -1;
 mov	ax,*-1
 add	sp,*4
 pop	si
@@ -361,30 +361,30 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 122     }
-! 123 
+! 123     }
 ! 124 
-! 125     
-! 126     setKernelDataSegment();
+! 125 
+! 126     
+! 127     setKernelDataSegment();
 .6:
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 127     pcb = pcbPool;
+! 128     pcb = pcbPool;
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
-! 128     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
+! 129     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 129     {
+! 130     {
 jmp .D
 .E:
-! 130         if (pcb->state == DEFUNCT) continue;
+! 131         if (pcb->state == DEFUNCT) continue;
 mov	bx,-6[bp]
 ! Debug: logeq int = const 0 to int = [bx+8] (used reg = )
 mov	ax,8[bx]
@@ -393,7 +393,7 @@ jne 	.F
 .10:
 jmp .C
 !BCC_EOS
-! 131         if (SEGMENT_INDEX(pcb->segment)== segi)
+! 132         if (SEGMENT_INDEX(pcb->segment)== segi)
 .F:
 mov	bx,-6[bp]
 ! Debug: sr int = const $C to int = [bx+$A] (used reg = )
@@ -412,19 +412,19 @@ dec	ax
 cmp	ax,4[bp]
 jne 	.11
 .12:
-! 132         {
-! 133             ret = 1;
+! 133         {
+! 134             ret = 1;
 ! Debug: eq int = const 1 to int ret = [S+$A-$A] (used reg = )
 mov	ax,*1
 mov	-8[bp],ax
 !BCC_EOS
-! 134             break;
+! 135             break;
 jmp .B
 !BCC_EOS
-! 135         }
-! 136     }
+! 136         }
+! 137     }
 .11:
-! 137     restoreDataSegment();
+! 138     restoreDataSegment();
 .C:
 ! Debug: preinc * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,-6[bp]
@@ -440,19 +440,19 @@ ja 	.E
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 138 
-! 139     if (ret == -1)
+! 139 
+! 140     if (ret == -1)
 ! Debug: logeq int = const -1 to int ret = [S+$A-$A] (used reg = )
 mov	ax,-8[bp]
 cmp	ax,*-1
 jne 	.14
 .15:
-! 140     {
-! 141         setKernelDataSegment();
+! 141     {
+! 142         setKernelDataSegment();
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 142         printString("error: no process with segment index ");
+! 143         printString("error: no process with segment index ");
 ! Debug: list * char = .16+0 (used reg = )
 mov	bx,#.16
 push	bx
@@ -461,7 +461,7 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 143         printInt(segi);
+! 144         printInt(segi);
 ! Debug: list int segi = [S+$A+2] (used reg = )
 push	4[bp]
 ! Debug: func () int = printInt+0 (used reg = )
@@ -469,7 +469,7 @@ call	_printInt
 inc	sp
 inc	sp
 !BCC_EOS
-! 144         printString("\n\r");
+! 145         printString("\n\r");
 ! Debug: list * char = .17+0 (used reg = )
 mov	bx,#.17
 push	bx
@@ -478,11 +478,11 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 145         restoreDataSegment();
+! 146         restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 146         return -1;
+! 147         return -1;
 mov	ax,*-1
 add	sp,*4
 pop	si
@@ -490,20 +490,20 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 147     }
-! 148 
-! 149     setKernelDataSegment();
+! 148     }
+! 149 
+! 150     setKernelDataSegment();
 .14:
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 150 
-! 151     
-! 152     disableInterrupts();
+! 151 
+! 152     
+! 153     disableInterrupts();
 ! Debug: func () void = disableInterrupts+0 (used reg = )
 call	_disableInterrupts
 !BCC_EOS
-! 153     removeFromQueue(pcb);
+! 154     removeFromQueue(pcb);
 ! Debug: list * struct PCB pcb = [S+$A-8] (used reg = )
 push	-6[bp]
 ! Debug: func () * struct PCB = removeFromQueue+0 (used reg = )
@@ -511,11 +511,11 @@ call	_removeFromQueue
 inc	sp
 inc	sp
 !BCC_EOS
-! 154     restoreInterrupts();
+! 155     restoreInterrupts();
 ! Debug: func () int = restoreInterrupts+0 (used reg = )
 call	_restoreInterrupts
 !BCC_EOS
-! 155     releaseMemorySegment(segi);
+! 156     releaseMemorySegment(segi);
 ! Debug: list int segi = [S+$A+2] (used reg = )
 push	4[bp]
 ! Debug: func () void = releaseMemorySegment+0 (used reg = )
@@ -523,9 +523,9 @@ call	_releaseMemorySegment
 inc	sp
 inc	sp
 !BCC_EOS
-! 156 
-! 157     
-! 158     printString("killed ");
+! 157 
+! 158     
+! 159     printString("killed ");
 ! Debug: list * char = .18+0 (used reg = )
 mov	bx,#.18
 push	bx
@@ -534,7 +534,7 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 159     printString(pcb->name);
+! 160     printString(pcb->name);
 ! Debug: cast * char = const 0 to [7] char pcb = [S+$A-8] (used reg = )
 ! Debug: list * char pcb = [S+$A-8] (used reg = )
 push	-6[bp]
@@ -543,7 +543,7 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 160     printString("\n\r");
+! 161     printString("\n\r");
 ! Debug: list * char = .19+0 (used reg = )
 mov	bx,#.19
 push	bx
@@ -552,9 +552,9 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 161 
-! 162     
-! 163     releasePCB(pcb);
+! 162 
+! 163     
+! 164     releasePCB(pcb);
 ! Debug: list * struct PCB pcb = [S+$A-8] (used reg = )
 push	-6[bp]
 ! Debug: func () void = releasePCB+0 (used reg = )
@@ -562,9 +562,9 @@ call	_releasePCB
 inc	sp
 inc	sp
 !BCC_EOS
-! 164 
-! 165     
-! 166     update_proc_blocked(segi);
+! 165 
+! 166     
+! 167     update_proc_blocked(segi);
 ! Debug: list int segi = [S+$A+2] (used reg = )
 push	4[bp]
 ! Debug: func () void = update_proc_blocked+0 (used reg = )
@@ -572,27 +572,27 @@ call	_update_proc_blocked
 inc	sp
 inc	sp
 !BCC_EOS
-! 167 
-! 168     
-! 169     if (running == pcb) {
+! 168 
+! 169     
+! 170     if (running == pcb) {
 ! Debug: logeq * struct PCB pcb = [S+$A-8] to * struct PCB = [running+0] (used reg = )
 mov	bx,[_running]
 cmp	bx,-6[bp]
 jne 	.1A
 .1B:
-! 170         yield();
+! 171         yield();
 ! Debug: func () void = yield+0 (used reg = )
 call	_yield
 !BCC_EOS
-! 171     }
-! 172 
-! 173     restoreDataSegment();
+! 172     }
+! 173 
+! 174     restoreDataSegment();
 .1A:
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 174 
-! 175     return ret;
+! 175 
+! 176     return ret;
 mov	ax,-8[bp]
 add	sp,*4
 pop	si
@@ -600,22 +600,22 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 176 }
-! 177 # 181
-! 181 int sleep(time)
+! 177 }
+! 178 # 182
+! 182 int sleep(time)
 ! Register BX used in function kill
-! 182 # 181 "./src/kernel.c"
-! 181 int time;
+! 183 # 182 "./src/kernel.c"
+! 182 int time;
 export	_sleep
 _sleep:
 !BCC_EOS
-! 182 {
-! 183     union  state_info_t  *state_info;
+! 183 {
+! 184     union  state_info_t  *state_info;
 !BCC_EOS
-! 184     struct sleep_info_t  *sleep_info;
+! 185     struct sleep_info_t  *sleep_info;
 !BCC_EOS
-! 185 
-! 186     setKernelDataSegment();
+! 186 
+! 187     setKernelDataSegment();
 push	bp
 mov	bp,sp
 push	di
@@ -624,13 +624,13 @@ add	sp,*-4
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 187     if (running == 0x00 ) 
+! 188     if (running == 0x00 ) 
 ! Debug: logeq int = const 0 to * struct PCB = [running+0] (used reg = )
 mov	ax,[_running]
 test	ax,ax
 jne 	.1C
 .1D:
-! 188         return 0; 
+! 189         return 0; 
 xor	ax,ax
 add	sp,*4
 pop	si
@@ -638,9 +638,9 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 189 
-! 190     
-! 191     state_info = &(running->state_info);
+! 190 
+! 191     
+! 192     state_info = &(running->state_info);
 .1C:
 mov	bx,[_running]
 ! Debug: address struct state_info_t = [bx+$E] (used reg = )
@@ -648,14 +648,14 @@ mov	bx,[_running]
 add	bx,*$E
 mov	-6[bp],bx
 !BCC_EOS
-! 192     sleep_info = &(state_info->sleep_info);
+! 193     sleep_info = &(state_info->sleep_info);
 mov	bx,-6[bp]
 ! Debug: address struct sleep_info_t = [bx+0] (used reg = )
 ! Debug: eq * struct sleep_info_t = bx+0 to * struct sleep_info_t sleep_info = [S+$A-$A] (used reg = )
 mov	-8[bp],bx
 !BCC_EOS
-! 193 
-! 194     sleep_info->full    = time*12;
+! 194 
+! 195     sleep_info->full    = time*12;
 ! Debug: mul int = const $C to int time = [S+$A+2] (used reg = )
 mov	ax,4[bp]
 mov	dx,ax
@@ -667,34 +667,34 @@ mov	bx,-8[bp]
 ! Debug: eq int = ax+0 to int = [bx+0] (used reg = )
 mov	[bx],ax
 !BCC_EOS
-! 195     sleep_info->current = 0;
+! 196     sleep_info->current = 0;
 mov	bx,-8[bp]
 ! Debug: eq int = const 0 to int = [bx+2] (used reg = )
 xor	ax,ax
 mov	2[bx],ax
 !BCC_EOS
-! 196 
-! 197     
+! 197 
 ! 198     
 ! 199     
-! 200   
-! 200   running->state = 5 ;
+! 200     
+! 201   
+! 201   running->state = 5 ;
 mov	bx,[_running]
 ! Debug: eq int = const 5 to int = [bx+8] (used reg = )
 mov	ax,*5
 mov	8[bx],ax
 !BCC_EOS
-! 201     restoreDataSegment();
+! 202     restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 202 
-! 203     yield();
+! 203 
+! 204     yield();
 ! Debug: func () void = yield+0 (used reg = )
 call	_yield
 !BCC_EOS
-! 204 
-! 205     return 1;
+! 205 
+! 206     return 1;
 mov	ax,*1
 add	sp,*4
 pop	si
@@ -702,23 +702,23 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 206 }
-! 207 # 216
-! 216  
-! 217 int block(segi)
+! 207 }
+! 208 # 217
+! 217  
+! 218 int block(segi)
 ! Register BX used in function sleep
-! 218 # 217 "./src/kernel.c"
-! 217 int segi;
+! 219 # 218 "./src/kernel.c"
+! 218 int segi;
 export	_block
 _block:
 !BCC_EOS
-! 218 {
-! 219     union  state_info_t  *state_info;
+! 219 {
+! 220     union  state_info_t  *state_info;
 !BCC_EOS
-! 220     struct block_info_t  *block_info;
+! 221     struct block_info_t  *block_info;
 !BCC_EOS
-! 221 
-! 222     if (segi < 0 || segi > 7)
+! 222 
+! 223     if (segi < 0 || segi > 7)
 push	bp
 mov	bp,sp
 push	di
@@ -734,8 +734,8 @@ mov	ax,4[bp]
 cmp	ax,*7
 jle 	.1E
 .1F:
-! 223     {
-! 224         return 1;
+! 224     {
+! 225         return 1;
 mov	ax,*1
 add	sp,*4
 pop	si
@@ -743,9 +743,9 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 225     }
-! 226 
-! 227     state_info = &(running->state_info);
+! 226     }
+! 227 
+! 228     state_info = &(running->state_info);
 .1E:
 mov	bx,[_running]
 ! Debug: address struct state_info_t = [bx+$E] (used reg = )
@@ -753,27 +753,27 @@ mov	bx,[_running]
 add	bx,*$E
 mov	-6[bp],bx
 !BCC_EOS
-! 228     block_info = &(state_info->block_info);
+! 229     block_info = &(state_info->block_info);
 mov	bx,-6[bp]
 ! Debug: address struct block_info_t = [bx+0] (used reg = )
 ! Debug: eq * struct block_info_t = bx+0 to * struct block_info_t block_info = [S+$A-$A] (used reg = )
 mov	-8[bp],bx
 !BCC_EOS
-! 229 
-! 230     block_info->wait_pseg = segi;
+! 230 
+! 231     block_info->wait_pseg = segi;
 mov	bx,-8[bp]
 ! Debug: eq int segi = [S+$A+2] to int = [bx+0] (used reg = )
 mov	ax,4[bp]
 mov	[bx],ax
 !BCC_EOS
-! 231     running->state = 3 ;
+! 232     running->state = 3 ;
 mov	bx,[_running]
 ! Debug: eq int = const 3 to int = [bx+8] (used reg = )
 mov	ax,*3
 mov	8[bx],ax
 !BCC_EOS
-! 232 
-! 233     return 0;
+! 233 
+! 234     return 0;
 xor	ax,ax
 add	sp,*4
 pop	si
@@ -781,25 +781,25 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 234 }
-! 235 # 241
-! 241  
-! 242 void update_proc_blocked(segi)
+! 235 }
+! 236 # 242
+! 242  
+! 243 void update_proc_blocked(segi)
 ! Register BX used in function block
-! 243 # 242 "./src/kernel.c"
-! 242 int segi;
+! 244 # 243 "./src/kernel.c"
+! 243 int segi;
 export	_update_proc_blocked
 _update_proc_blocked:
 !BCC_EOS
-! 243 {
-! 244     union  state_info_t  *state_info;
+! 244 {
+! 245     union  state_info_t  *state_info;
 !BCC_EOS
-! 245     struct block_info_t  *block_info;
+! 246     struct block_info_t  *block_info;
 !BCC_EOS
-! 246     struct PCB           *pcb;
+! 247     struct PCB           *pcb;
 !BCC_EOS
-! 247 
-! 248     if (segi < 0 || segi > 7)
+! 248 
+! 249     if (segi < 0 || segi > 7)
 push	bp
 mov	bp,sp
 push	di
@@ -815,47 +815,47 @@ mov	ax,4[bp]
 cmp	ax,*7
 jle 	.21
 .22:
-! 249         return;
+! 250         return;
 add	sp,*6
 pop	si
 pop	di
 pop	bp
 ret
 !BCC_EOS
-! 250 
-! 251     setKernelDataSegment();
+! 251 
+! 252     setKernelDataSegment();
 .21:
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 252     
-! 253     pcb = pcbPool;
+! 253     
+! 254     pcb = pcbPool;
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$C-$C] (used reg = )
 mov	bx,#_pcbPool
 mov	-$A[bp],bx
 !BCC_EOS
-! 254     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
+! 255     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$C-$C] (used reg = )
 mov	bx,#_pcbPool
 mov	-$A[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 255     {
+! 256     {
 jmp .26
 .27:
-! 256         
 ! 257         
-! 258         if (pcb->state != 3  )
+! 258         
+! 259         if (pcb->state != 3  )
 mov	bx,-$A[bp]
 ! Debug: ne int = const 3 to int = [bx+8] (used reg = )
 mov	bx,8[bx]
 cmp	bx,*3
 je  	.28
 .29:
-! 259             continue;
+! 260             continue;
 jmp .25
 !BCC_EOS
-! 260         if (pcb->state_info.block_info.wait_pseg != segi)
+! 261         if (pcb->state_info.block_info.wait_pseg != segi)
 .28:
 mov	bx,-$A[bp]
 ! Debug: ne int segi = [S+$C+2] to int = [bx+$E] (used reg = )
@@ -863,18 +863,18 @@ mov	bx,$E[bx]
 cmp	bx,4[bp]
 je  	.2A
 .2B:
-! 261             continue;
+! 262             continue;
 jmp .25
 !BCC_EOS
-! 262         
-! 263         pcb->state = 2 ;
+! 263         
+! 264         pcb->state = 2 ;
 .2A:
 mov	bx,-$A[bp]
 ! Debug: eq int = const 2 to int = [bx+8] (used reg = )
 mov	ax,*2
 mov	8[bx],ax
 !BCC_EOS
-! 264         addToReady(pcb);
+! 265         addToReady(pcb);
 ! Debug: list * struct PCB pcb = [S+$C-$C] (used reg = )
 push	-$A[bp]
 ! Debug: func () void = addToReady+0 (used reg = )
@@ -882,8 +882,8 @@ call	_addToReady
 inc	sp
 inc	sp
 !BCC_EOS
-! 265     }
-! 266     restoreDataSegment();
+! 266     }
+! 267     restoreDataSegment();
 .25:
 ! Debug: preinc * struct PCB pcb = [S+$C-$C] (used reg = )
 mov	bx,-$A[bp]
@@ -899,26 +899,26 @@ ja 	.27
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 267 }
+! 268 }
 add	sp,*6
 pop	si
 pop	di
 pop	bp
 ret
-! 268 # 274
-! 274  
-! 275 void update_proc_sleep()
+! 269 # 275
+! 275  
+! 276 void update_proc_sleep()
 ! Register BX used in function update_proc_blocked
-! 276 {
+! 277 {
 export	_update_proc_sleep
 _update_proc_sleep:
-! 277     struct PCB *pcb;
+! 278     struct PCB *pcb;
 !BCC_EOS
-! 278     struct sleep_info_t *sleep_info;
+! 279     struct sleep_info_t *sleep_info;
 !BCC_EOS
-! 279 
-! 280     
-! 281     pcb = pcbPool;
+! 280 
+! 281     
+! 282     pcb = pcbPool;
 push	bp
 mov	bp,sp
 push	di
@@ -928,16 +928,16 @@ add	sp,*-4
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
-! 282     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
+! 283     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 283     {
+! 284     {
 jmp .2F
 .30:
-! 284         if (pcb->state != 5 ) continue;
+! 285         if (pcb->state != 5 ) continue;
 mov	bx,-6[bp]
 ! Debug: ne int = const 5 to int = [bx+8] (used reg = )
 mov	bx,8[bx]
@@ -946,7 +946,7 @@ je  	.31
 .32:
 jmp .2E
 !BCC_EOS
-! 285         sleep_info = &(pcb->state_info.sleep_info);
+! 286         sleep_info = &(pcb->state_info.sleep_info);
 .31:
 mov	bx,-6[bp]
 ! Debug: address struct sleep_info_t = [bx+$E] (used reg = )
@@ -954,18 +954,18 @@ mov	bx,-6[bp]
 add	bx,*$E
 mov	-8[bp],bx
 !BCC_EOS
-! 286 
-! 287         
-! 288         sleep_info->current += SLEEP_TIME;
+! 287 
+! 288         
+! 289         sleep_info->current += SLEEP_TIME;
 mov	bx,-8[bp]
 ! Debug: addab int = const 1 to int = [bx+2] (used reg = )
 mov	ax,2[bx]
 inc	ax
 mov	2[bx],ax
 !BCC_EOS
-! 289 
-! 290         
-! 291         if (sleep_info->current >= sleep_info->full)
+! 290 
+! 291         
+! 292         if (sleep_info->current >= sleep_info->full)
 mov	bx,-8[bp]
 mov	si,-8[bp]
 ! Debug: ge int = [bx+0] to int = [si+2] (used reg = )
@@ -973,15 +973,15 @@ mov	si,2[si]
 cmp	si,[bx]
 jl  	.33
 .34:
-! 292         {
-! 293             
-! 294             pcb->state = 2 ;
+! 293         {
+! 294             
+! 295             pcb->state = 2 ;
 mov	bx,-6[bp]
 ! Debug: eq int = const 2 to int = [bx+8] (used reg = )
 mov	ax,*2
 mov	8[bx],ax
 !BCC_EOS
-! 295             addToReady(pcb);
+! 296             addToReady(pcb);
 ! Debug: list * struct PCB pcb = [S+$A-8] (used reg = )
 push	-6[bp]
 ! Debug: func () void = addToReady+0 (used reg = )
@@ -989,10 +989,10 @@ call	_addToReady
 inc	sp
 inc	sp
 !BCC_EOS
-! 296         }
-! 297     }
+! 297         }
+! 298     }
 .33:
-! 298 }
+! 299 }
 .2E:
 ! Debug: preinc * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,-6[bp]
@@ -1010,22 +1010,22 @@ pop	si
 pop	di
 pop	bp
 ret
-! 299 
-! 300 
-! 301 int handleTimerInterrupt(ds,ss)
+! 300 # 307
+! 307  
+! 308 int handleTimerInterrupt(ds,ss)
 ! Register BX SI used in function update_proc_sleep
-! 302 # 301 "./src/kernel.c"
-! 301 int ds;
+! 309 # 308 "./src/kernel.c"
+! 308 int ds;
 export	_handleTimerInterrupt
 _handleTimerInterrupt:
 !BCC_EOS
-! 302 # 301 "./src/kernel.c"
-! 301 int ss;
+! 309 # 308 "./src/kernel.c"
+! 308 int ss;
 !BCC_EOS
-! 302 {
-! 303     struct PCB *pcb;
+! 309 {
+! 310     struct PCB *pcb;
 !BCC_EOS
-! 304     int add_to_queue = 0;
+! 311     int add_to_queue = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -1035,33 +1035,34 @@ add	sp,*-4
 xor	ax,ax
 mov	-8[bp],ax
 !BCC_EOS
-! 305 
-! 306     update_proc_sleep();
+! 312 
+! 313     
+! 314     update_proc_sleep();
 ! Debug: func () void = update_proc_sleep+0 (used reg = )
 call	_update_proc_sleep
 !BCC_EOS
-! 307 
-! 308     if (running->state != DEFUNCT)
+! 315 
+! 316     if (running->state != DEFUNCT)
 mov	bx,[_running]
 ! Debug: ne int = const 0 to int = [bx+8] (used reg = )
 mov	ax,8[bx]
 test	ax,ax
 je  	.36
 .37:
-! 309     {
-! 310         running->segment = ds;
+! 317     {
+! 318         running->segment = ds;
 mov	bx,[_running]
 ! Debug: eq int ds = [S+$A+2] to int = [bx+$A] (used reg = )
 mov	ax,4[bp]
 mov	$A[bx],ax
 !BCC_EOS
-! 311         running->stackPointer = ss;
+! 319         running->stackPointer = ss;
 mov	bx,[_running]
 ! Debug: eq int ss = [S+$A+4] to int = [bx+$C] (used reg = )
 mov	ax,6[bp]
 mov	$C[bx],ax
 !BCC_EOS
-! 312         add_to_queue = (running->state != 5  && running->state != 3 );
+! 320         add_to_queue = (running->state != 5  && running->state != 3 );
 mov	bx,[_running]
 ! Debug: ne int = const 5 to int = [bx+8] (used reg = )
 mov	bx,8[bx]
@@ -1083,21 +1084,22 @@ xor	al,al
 xor	ah,ah
 mov	-8[bp],ax
 !BCC_EOS
-! 313 
-! 314         if (add_to_queue)
+! 321 
+! 322         
+! 323         if (add_to_queue)
 mov	ax,-8[bp]
 test	ax,ax
 je  	.3C
 .3D:
-! 315             running->state = 2 ;
+! 324             running->state = 2 ;
 mov	bx,[_running]
 ! Debug: eq int = const 2 to int = [bx+8] (used reg = )
 mov	ax,*2
 mov	8[bx],ax
 !BCC_EOS
-! 316 
-! 317         
-! 318         if (add_to_queue && !strcmp(running->name,"IDLE"))
+! 325 
+! 326         
+! 327         if (add_to_queue && !strcmp(running->name,"IDLE"))
 .3C:
 mov	ax,-8[bp]
 test	ax,ax
@@ -1115,7 +1117,7 @@ add	sp,*4
 test	ax,ax
 jne 	.3E
 .40:
-! 319             addToReady(running);
+! 328             addToReady(running);
 ! Debug: list * struct PCB = [running+0] (used reg = )
 push	[_running]
 ! Debug: func () void = addToReady+0 (used reg = )
@@ -1123,45 +1125,48 @@ call	_addToReady
 inc	sp
 inc	sp
 !BCC_EOS
-! 320     }
+! 329     }
 .3E:
-! 321 
-! 322     pcb = removeFromReady();
+! 330 
+! 331     
+! 332     pc
+! 332 b = removeFromReady();
 .36:
 ! Debug: func () * struct PCB = removeFromReady+0 (used reg = )
 call	_removeFromReady
 ! Debug: eq * struct PCB = ax+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 323 
-! 324  
-! 324    if (pcb == 0x00 )
+! 333 
+! 334     
+! 335     if (pcb == 0x00 )
 ! Debug: logeq int = const 0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	ax,-6[bp]
 test	ax,ax
 jne 	.42
 .43:
-! 325     {
-! 326         pcb = &idleProc;
+! 336     {
+! 337         pcb = &idleProc;
 ! Debug: eq * struct PCB = idleProc+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_idleProc
 mov	-6[bp],bx
 !BCC_EOS
-! 327     }
-! 328 
-! 329     pcb->state = 1 ;
+! 338     }
+! 339 
+! 340     
+! 341     pcb->state = 1 ;
 .42:
 mov	bx,-6[bp]
 ! Debug: eq int = const 1 to int = [bx+8] (used reg = )
 mov	ax,*1
 mov	8[bx],ax
 !BCC_EOS
-! 330     running = pcb;
+! 342     running = pcb;
 ! Debug: eq * struct PCB pcb = [S+$A-8] to * struct PCB = [running+0] (used reg = )
 mov	bx,-6[bp]
 mov	[_running],bx
 !BCC_EOS
-! 331     returnFromTimer(pcb->segment,pcb->stackPointer);
+! 343     returnFromTimer(pcb->segment,pcb->stackPointer);
 mov	bx,-6[bp]
 ! Debug: list int = [bx+$C] (used reg = )
 push	$C[bx]
@@ -1172,8 +1177,8 @@ push	$A[bx]
 call	_returnFromTimer
 add	sp,*4
 !BCC_EOS
-! 332 
-! 333     return 0;
+! 344 
+! 345     return 0;
 xor	ax,ax
 add	sp,*4
 pop	si
@@ -1181,18 +1186,19 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 334 }
-! 335 
-! 336 void showProcesses()
+! 346 }
+! 347 # 351
+! 351  
+! 352 void showProcesses()
 ! Register BX used in function handleTimerInterrupt
-! 337 {
+! 353 {
 export	_showProcesses
 _showProcesses:
-! 338     struct PCB *pcb;
+! 354     struct PCB *pcb;
 !BCC_EOS
-! 339     int n;
+! 355     int n;
 !BCC_EOS
-! 340     setKernelDataSegment();
+! 356     setKernelDataSegment();
 push	bp
 mov	bp,sp
 push	di
@@ -1201,23 +1207,23 @@ add	sp,*-4
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 341 
-! 342     
-! 343     pcb = pcbPool;
+! 357 
+! 358     
+! 359     pcb = pcbPool;
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
-! 344     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
+! 360     for (pcb = pcbPool; pcb < pcbPool+8; ++pcb)
 ! Debug: eq [8] struct PCB = pcbPool+0 to * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,#_pcbPool
 mov	-6[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 345     {
+! 361     {
 br 	.46
 .47:
-! 346         if (pcb->state == DEFUNCT) continue;
+! 362         if (pcb->state == DEFUNCT) continue;
 mov	bx,-6[bp]
 ! Debug: logeq int = const 0 to int = [bx+8] (used reg = )
 mov	ax,8[bx]
@@ -1226,7 +1232,7 @@ jne 	.48
 .49:
 br 	.45
 !BCC_EOS
-! 347         printw(pcb->name,10);
+! 363         printw(pcb->name,10);
 .48:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1238,7 +1244,7 @@ push	-6[bp]
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 348         printintw(SEGMENT_INDEX(pcb->segment),3);
+! 364         printintw(SEGMENT_INDEX(pcb->segment),3);
 ! Debug: list int = const 3 (used reg = )
 mov	ax,*3
 push	ax
@@ -1261,7 +1267,7 @@ push	ax
 call	_printintw
 add	sp,*4
 !BCC_EOS
-! 349         printw("",3);
+! 365         printw("",3);
 ! Debug: list int = const 3 (used reg = )
 mov	ax,*3
 push	ax
@@ -1272,14 +1278,14 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 350 
-! 351         switch(pcb->state)
+! 366 
+! 367         switch(pcb->state)
 mov	bx,-6[bp]
 mov	ax,8[bx]
-! 352         {
+! 368         {
 jmp .4D
-! 353             case 1 :
-! 354                 printw("RUNNING",10);
+! 369             case 1 :
+! 370                 printw("RUNNING",10);
 .4E:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1291,11 +1297,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 355                 break;
+! 371                 break;
 jmp .4B
 !BCC_EOS
-! 356             case 2 :
-! 357                 printw("READY",10);
+! 372             case 2 :
+! 373                 printw("READY",10);
 .50:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1307,11 +1313,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 358                 break;
+! 374                 break;
 jmp .4B
 !BCC_EOS
-! 359             case 3 :
-! 360                 printw("BLOCKED",10);
+! 375             case 3 :
+! 376                 printw("BLOCKED",10);
 .52:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1323,11 +1329,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 361                 break;
+! 377                 break;
 jmp .4B
 !BCC_EOS
-! 362             case 5 :
-! 363                 printw("SLEEPING",10);
+! 378             case 5 :
+! 379                 printw("SLEEPING",10);
 .54:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1339,11 +1345,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 364                 break;
+! 380                 break;
 jmp .4B
 !BCC_EOS
-! 365             case 4 :
-! 366                 printw("STARTING",10);
+! 381             case 4 :
+! 382                 printw("STARTING",10);
 .56:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1355,11 +1361,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 367                 break;
+! 383                 break;
 jmp .4B
 !BCC_EOS
-! 368             default:
-! 369                 printw("UNKOWN",10);
+! 384             default:
+! 385                 printw("UNKOWN",10);
 .58:
 ! Debug: list int = const $A (used reg = )
 mov	ax,*$A
@@ -1371,11 +1377,11 @@ push	bx
 call	_printw
 add	sp,*4
 !BCC_EOS
-! 370                 break;
+! 386                 break;
 jmp .4B
 !BCC_EOS
-! 371         }
-! 372         printString("\n\r");
+! 387         }
+! 388         printString("\n\r");
 jmp .4B
 .4D:
 sub	ax,*1
@@ -1399,8 +1405,8 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 373     }
-! 374     restoreDataSegment();
+! 389     }
+! 390     restoreDataSegment();
 .45:
 ! Debug: preinc * struct PCB pcb = [S+$A-8] (used reg = )
 mov	bx,-6[bp]
@@ -1416,26 +1422,26 @@ bhi 	.47
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 375 }
+! 391 }
 add	sp,*4
 pop	si
 pop	di
 pop	bp
 ret
-! 376 
-! 377 
-! 378 void printw(ptr,w)
+! 392 
+! 393 
+! 394 void printw(ptr,w)
 ! Register BX used in function showProcesses
-! 379 # 378 "./src/kernel.c"
-! 378 char *ptr;
+! 395 # 394 "./src/kernel.c"
+! 394 char *ptr;
 export	_printw
 _printw:
 !BCC_EOS
-! 379 # 378 "./src/kernel.c"
-! 378 int w;
+! 395 # 394 "./src/kernel.c"
+! 394 int w;
 !BCC_EOS
-! 379 {
-! 380     int n = printString(ptr);
+! 395 {
+! 396     int n = printString(ptr);
 push	bp
 mov	bp,sp
 push	di
@@ -1451,9 +1457,9 @@ inc	sp
 ! Debug: eq int = ax+0 to int n = [S+8-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 381     int diff;
+! 397     int diff;
 !BCC_EOS
-! 382     if (n < w) {
+! 398     if (n < w) {
 dec	sp
 dec	sp
 ! Debug: lt int w = [S+$A+4] to int n = [S+$A-8] (used reg = )
@@ -1461,15 +1467,15 @@ mov	ax,-6[bp]
 cmp	ax,6[bp]
 jge 	.5C
 .5D:
-! 383         diff = w - n;
+! 399         diff = w - n;
 ! Debug: sub int n = [S+$A-8] to int w = [S+$A+4] (used reg = )
 mov	ax,6[bp]
 sub	ax,-6[bp]
 ! Debug: eq int = ax+0 to int diff = [S+$A-$A] (used reg = )
 mov	-8[bp],ax
 !BCC_EOS
-! 384         while (diff-- > 0)
-! 385             PUT_CHAR(' ');
+! 400         while (diff-- > 0)
+! 401             PUT_CHAR(' ');
 jmp .5F
 .60:
 ! Debug: list int = const 0 (used reg = )
@@ -1491,7 +1497,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 386     }
+! 402     }
 .5F:
 ! Debug: postdec int diff = [S+$A-$A] (used reg = )
 mov	ax,-8[bp]
@@ -1503,30 +1509,30 @@ test	ax,ax
 jg 	.60
 .61:
 .5E:
-! 387 }
+! 403 }
 .5C:
 add	sp,*4
 pop	si
 pop	di
 pop	bp
 ret
-! 388 
-! 389 
-! 390 void printintw(x,w)
-! 391 # 390 "./src/kernel.c"
-! 390 int x;
+! 404 
+! 405 
+! 406 void printintw(x,w)
+! 407 # 406 "./src/kernel.c"
+! 406 int x;
 export	_printintw
 _printintw:
 !BCC_EOS
-! 391 # 390 "./src/kernel.c"
-! 390 int w;
+! 407 # 406 "./src/kernel.c"
+! 406 int w;
 !BCC_EOS
-! 391 {
-! 392     char buf[13];
+! 407 {
+! 408     char buf[13];
 !BCC_EOS
-! 393     int diff;
+! 409     int diff;
 !BCC_EOS
-! 394     int n = sprintInt(x,buf,13);
+! 410     int n = sprintInt(x,buf,13);
 push	bp
 mov	bp,sp
 push	di
@@ -1546,22 +1552,22 @@ add	sp,*6
 ! Debug: eq int = ax+0 to int n = [S+$18-$18] (used reg = )
 mov	-$16[bp],ax
 !BCC_EOS
-! 395 
-! 396     if (n < w) {
+! 411 
+! 412     if (n < w) {
 ! Debug: lt int w = [S+$18+4] to int n = [S+$18-$18] (used reg = )
 mov	ax,-$16[bp]
 cmp	ax,6[bp]
 jge 	.62
 .63:
-! 397         diff = w - n;
+! 413         diff = w - n;
 ! Debug: sub int n = [S+$18-$18] to int w = [S+$18+4] (used reg = )
 mov	ax,6[bp]
 sub	ax,-$16[bp]
 ! Debug: eq int = ax+0 to int diff = [S+$18-$16] (used reg = )
 mov	-$14[bp],ax
 !BCC_EOS
-! 398         while (diff-- > 0)
-! 399             PUT_CHAR(' ');
+! 414         while (diff-- > 0)
+! 415             PUT_CHAR(' ');
 jmp .65
 .66:
 ! Debug: list int = const 0 (used reg = )
@@ -1583,7 +1589,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 400     }
+! 416     }
 .65:
 ! Debug: postdec int diff = [S+$18-$16] (used reg = )
 mov	ax,-$14[bp]
@@ -1595,7 +1601,7 @@ test	ax,ax
 jg 	.66
 .67:
 .64:
-! 401     printString(buf);
+! 417     printString(buf);
 .62:
 ! Debug: list * char buf = S+$18-$13 (used reg = )
 lea	bx,-$11[bp]
@@ -1605,30 +1611,30 @@ call	_printString
 inc	sp
 inc	sp
 !BCC_EOS
-! 402 }
+! 418 }
 add	sp,*$12
 pop	si
 pop	di
 pop	bp
 ret
-! 403 # 410
-! 410   
-! 411 void kStrCopy(src,dest,len)
+! 419 # 426
+! 426   
+! 427 void kStrCopy(src,dest,len)
 ! Register BX used in function printintw
-! 412 # 411 "./src/kernel.c"
-! 411 char *src;
+! 428 # 427 "./src/kernel.c"
+! 427 char *src;
 export	_kStrCopy
 _kStrCopy:
 !BCC_EOS
-! 412 # 411 "./src/kernel.c"
-! 411 char *dest;
+! 428 # 427 "./src/kernel.c"
+! 427 char *dest;
 !BCC_EOS
-! 412 # 411 "./src/kernel.c"
-! 411 int len;
+! 428 # 427 "./src/kernel.c"
+! 427 int len;
 !BCC_EOS
-! 412 # 411 "./src/kernel.c"
-! 411 { 
-! 412    int i=0; 
+! 428 # 427 "./src/kernel.c"
+! 427 { 
+! 428    int i=0; 
 push	bp
 mov	bp,sp
 push	di
@@ -1639,7 +1645,7 @@ dec	sp
 xor	ax,ax
 mov	-6[bp],ax
 !BCC_EOS
-! 413    for (i=0; i < len; i++) { 
+! 429    for (i=0; i < len; i++) { 
 ! Debug: eq int = const 0 to int i = [S+8-8] (used reg = )
 xor	ax,ax
 mov	-6[bp],ax
@@ -1647,7 +1653,7 @@ mov	-6[bp],ax
 !BCC_EOS
 jmp .6A
 .6B:
-! 414         putInMemory(0x1000,dest+i,src[i]); 
+! 430         putInMemory(0x1000,dest+i,src[i]); 
 ! Debug: ptradd int i = [S+8-8] to * char src = [S+8+2] (used reg = )
 mov	ax,-6[bp]
 add	ax,4[bp]
@@ -1668,7 +1674,7 @@ push	ax
 call	_putInMemory
 add	sp,*6
 !BCC_EOS
-! 415         if (src[i] == 0x00) { 
+! 431         if (src[i] == 0x00) { 
 ! Debug: ptradd int i = [S+8-8] to * char src = [S+8+2] (used reg = )
 mov	ax,-6[bp]
 add	ax,4[bp]
@@ -1678,7 +1684,7 @@ mov	al,[bx]
 test	al,al
 jne 	.6C
 .6D:
-! 416             return; 
+! 432             return; 
 inc	sp
 inc	sp
 pop	si
@@ -1686,10 +1692,10 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 417         } 
-! 418    } 
+! 433         } 
+! 434    } 
 .6C:
-! 419 }
+! 435 }
 .69:
 ! Debug: postinc int i = [S+8-8] (used reg = )
 mov	ax,-6[bp]
@@ -1708,17 +1714,17 @@ pop	si
 pop	di
 pop	bp
 ret
-! 420 # 424
-! 424  
-! 425 void terminate()
+! 436 # 440
+! 440  
+! 441 void terminate()
 ! Register BX used in function kStrCopy
-! 426 {
+! 442 {
 export	_terminate
 _terminate:
-! 427     int segi;
+! 443     int segi;
 !BCC_EOS
-! 428 
-! 429     setKernelDataSegment();
+! 444 
+! 445     setKernelDataSegment();
 push	bp
 mov	bp,sp
 push	di
@@ -1728,7 +1734,8 @@ dec	sp
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 430     segi = SEGMENT_INDEX(running->segment);
+! 446     segi = SEGMENT_INDEX(run
+! 446 ning->segment);
 mov	bx,[_running]
 ! Debug: sr int = const $C to int = [bx+$A] (used reg = )
 mov	ax,$A[bx]
@@ -1745,9 +1752,8 @@ dec	ax
 dec	ax
 mov	-6[bp],ax
 !BCC_EOS
-! 431     
-! 432     releaseMemorySegm
-! 432 ent(segi);
+! 447     
+! 448     releaseMemorySegment(segi);
 ! Debug: list int segi = [S+8-8] (used reg = )
 push	-6[bp]
 ! Debug: func () void = releaseMemorySegment+0 (used reg = )
@@ -1755,8 +1761,8 @@ call	_releaseMemorySegment
 inc	sp
 inc	sp
 !BCC_EOS
-! 433     
-! 434     releasePCB(running);
+! 449     
+! 450     releasePCB(running);
 ! Debug: list * struct PCB = [running+0] (used reg = )
 push	[_running]
 ! Debug: func () void = releasePCB+0 (used reg = )
@@ -1764,12 +1770,12 @@ call	_releasePCB
 inc	sp
 inc	sp
 !BCC_EOS
-! 435     restoreDataSegment();
+! 451     restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 436     
-! 437     update_proc_blocked(segi);
+! 452     
+! 453     update_proc_blocked(segi);
 ! Debug: list int segi = [S+8-8] (used reg = )
 push	-6[bp]
 ! Debug: func () void = update_proc_blocked+0 (used reg = )
@@ -1777,36 +1783,36 @@ call	_update_proc_blocked
 inc	sp
 inc	sp
 !BCC_EOS
-! 438 
-! 439     yield();
+! 454 
+! 455     yield();
 ! Debug: func () void = yield+0 (used reg = )
 call	_yield
 !BCC_EOS
-! 440 }
+! 456 }
 inc	sp
 inc	sp
 pop	si
 pop	di
 pop	bp
 ret
-! 441 # 448
-! 448  
-! 449 int executeProgram(name,blockopt)
+! 457 # 464
+! 464  
+! 465 int executeProgram(name,blockopt)
 ! Register BX used in function terminate
-! 450 # 449 "./src/kernel.c"
-! 449 char *name;
+! 466 # 465 "./src/kernel.c"
+! 465 char *name;
 export	_executeProgram
 _executeProgram:
 !BCC_EOS
-! 450 # 449 "./src/kernel.c"
-! 449 int blockopt;
+! 466 # 465 "./src/kernel.c"
+! 465 int blockopt;
 !BCC_EOS
-! 450 {
-! 451     char buffer[MAX_FILE];   
+! 466 {
+! 467     char buffer[MAX_FILE];   
 !BCC_EOS
-! 452     char magic_num[EXEC_MAGIC_OFFSET+1];
+! 468     char magic_num[EXEC_MAGIC_OFFSET+1];
 !BCC_EOS
-! 453     int k = 0, i = 0;
+! 469     int k = 0, i = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -1821,21 +1827,21 @@ dec	sp
 xor	ax,ax
 mov	-$340C[bp],ax
 !BCC_EOS
-! 454     int ret = 0;
+! 470     int ret = 0;
 dec	sp
 dec	sp
 ! Debug: eq int = const 0 to int ret = [S+$3410-$3410] (used reg = )
 xor	ax,ax
 mov	-$340E[bp],ax
 !BCC_EOS
-! 455     int segi;
+! 471     int segi;
 !BCC_EOS
-! 456     int segment;
+! 472     int segment;
 !BCC_EOS
-! 457     struct PCB *pcb;
+! 473     struct PCB *pcb;
 !BCC_EOS
-! 458 
-! 459     k = readFile(name,buffer,MAX_FILE);
+! 474 
+! 475     k = readFile(name,buffer,MAX_FILE);
 add	sp,*-6
 ! Debug: list int = const $3400 (used reg = )
 mov	ax,#$3400
@@ -1851,13 +1857,13 @@ add	sp,*6
 ! Debug: eq int = ax+0 to int k = [S+$3416-$340C] (used reg = )
 mov	-$340A[bp],ax
 !BCC_EOS
-! 460     if (k < 0)
+! 476     if (k < 0)
 ! Debug: lt int = const 0 to int k = [S+$3416-$340C] (used reg = )
 mov	ax,-$340A[bp]
 test	ax,ax
 jge 	.6F
 .70:
-! 461         return -1;
+! 477         return -1;
 mov	ax,*-1
 lea	sp,-4[bp]
 pop	si
@@ -1865,16 +1871,16 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 462 
-! 463     
-! 464     for (i = 0; i < EXEC_MAGIC_OFFSET; ++i)
+! 478 
+! 479     
+! 480     for (i = 0; i < EXEC_MAGIC_OFFSET; ++i)
 .6F:
 ! Debug: eq int = const 0 to int i = [S+$3416-$340E] (used reg = )
 xor	ax,ax
 mov	-$340C[bp],ax
 !BCC_EOS
 !BCC_EOS
-! 465         magic_num[i] = loadCharKernel(EXEC_MAGIC_NUM+i);
+! 481         magic_num[i] = loadCharKernel(EXEC_MAGIC_NUM+i);
 jmp .73
 .74:
 ! Debug: ptradd int i = [S+$3416-$340E] to [4] char = .75+0 (used reg = )
@@ -1898,7 +1904,7 @@ mov	-$3408[bx],al
 inc	sp
 inc	sp
 !BCC_EOS
-! 466     magic_num[i] = 0;
+! 482     magic_num[i] = 0;
 .72:
 ! Debug: preinc int i = [S+$3416-$340E] (used reg = )
 mov	ax,-$340C[bp]
@@ -1919,9 +1925,9 @@ add	bx,ax
 xor	al,al
 mov	-$3408[bx],al
 !BCC_EOS
-! 467 
-! 468     
-! 469     ret = strcmpn(magic_num,buffer,EXEC_MAGIC_OFFSET);
+! 483 
+! 484     
+! 485     ret = strcmpn(magic_num,buffer,EXEC_MAGIC_OFFSET);
 ! Debug: list int = const 3 (used reg = )
 mov	ax,*3
 push	ax
@@ -1937,13 +1943,13 @@ add	sp,*6
 ! Debug: eq int = ax+0 to int ret = [S+$3416-$3410] (used reg = )
 mov	-$340E[bp],ax
 !BCC_EOS
-! 470     if (!ret)
+! 486     if (!ret)
 mov	ax,-$340E[bp]
 test	ax,ax
 jne 	.77
 .78:
-! 471     {
-! 472         return -3;
+! 487     {
+! 488         return -3;
 mov	ax,*-3
 lea	sp,-4[bp]
 pop	si
@@ -1951,27 +1957,27 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 473     }
-! 474 
-! 475     
-! 476     setKernelDataSegment();
+! 489     }
+! 490 
+! 491     
+! 492     setKernelDataSegment();
 .77:
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 477     segi = getFreeMemorySegment();
+! 493     segi = getFreeMemorySegment();
 ! Debug: func () int = getFreeMemorySegment+0 (used reg = )
 call	_getFreeMemorySegment
 ! Debug: eq int = ax+0 to int segi = [S+$3416-$3412] (used reg = )
 mov	-$3410[bp],ax
 !BCC_EOS
-! 478     restoreDataSegment();
+! 494     restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 479 
-! 480     
-! 481     segment = INDEX_SEGMENT(segi);
+! 495 
+! 496     
+! 497     segment = INDEX_SEGMENT(segi);
 ! Debug: add int = const 2 to int segi = [S+$3416-$3412] (used reg = )
 mov	ax,-$3410[bp]
 ! Debug: sl int = const $C to int = ax+2 (used reg = )
@@ -1984,14 +1990,14 @@ shl	ax,cl
 ! Debug: eq int = ax+0 to int segment = [S+$3416-$3414] (used reg = )
 mov	-$3412[bp],ax
 !BCC_EOS
-! 482 
-! 483     if (segi == -1 )
+! 498 
+! 499     if (segi == -1 )
 ! Debug: logeq int = const -1 to int segi = [S+$3416-$3412] (used reg = )
 mov	ax,-$3410[bp]
 cmp	ax,*-1
 jne 	.79
 .7A:
-! 484         return -2;
+! 500         return -2;
 mov	ax,*-2
 lea	sp,-4[bp]
 pop	si
@@ -1999,9 +2005,9 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 485 
-! 486 
-! 487     k = (k << 9);
+! 501 
+! 502 
+! 503     k = (k << 9);
 .79:
 ! Debug: sl int = const 9 to int k = [S+$3416-$340C] (used reg = )
 mov	ax,-$340A[bp]
@@ -2011,16 +2017,16 @@ shl	ax,*1
 ! Debug: eq int = ax+0 to int k = [S+$3416-$340C] (used reg = )
 mov	-$340A[bp],ax
 !BCC_EOS
-! 488     for (i = EXEC_MAGIC_OFFSET; i < k; ++i)
+! 504     for (i = EXEC_MAGIC_OFFSET; i < k; ++i)
 ! Debug: eq int = const 3 to int i = [S+$3416-$340E] (used reg = )
 mov	ax,*3
 mov	-$340C[bp],ax
 !BCC_EOS
 !BCC_EOS
-! 489     {
+! 505     {
 jmp .7D
 .7E:
-! 490         putInMemory(segment,i-EXEC_MAGIC_OFFSET,*(buffer+i));
+! 506         putInMemory(segment,i-EXEC_MAGIC_OFFSET,*(buffer+i));
 ! Debug: ptradd int i = [S+$3416-$340E] to [$3400] char buffer = S+$3416-$3406 (used reg = )
 mov	ax,-$340C[bp]
 mov	bx,bp
@@ -2040,10 +2046,10 @@ push	-$3412[bp]
 call	_putInMemory
 add	sp,*6
 !BCC_EOS
-! 491     }
-! 492 
-! 493     
-! 494     setKernelDataSegment();
+! 507     }
+! 508 
+! 509     
+! 510     setKernelDataSegment();
 .7C:
 ! Debug: preinc int i = [S+$3416-$340E] (used reg = )
 mov	ax,-$340C[bp]
@@ -2059,24 +2065,24 @@ jl 	.7E
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 495     pcb = getFreePCB();
+! 511     pcb = getFreePCB();
 ! Debug: func () * struct PCB = getFreePCB+0 (used reg = )
 call	_getFreePCB
 ! Debug: eq * struct PCB = ax+0 to * struct PCB pcb = [S+$3416-$3416] (used reg = )
 mov	-$3414[bp],ax
 !BCC_EOS
-! 496     restoreDataSegment();
+! 512     restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 497 
-! 498     if (pcb == 0x00 )
+! 513 
+! 514     if (pcb == 0x00 )
 ! Debug: logeq int = const 0 to * struct PCB pcb = [S+$3416-$3416] (used reg = )
 mov	ax,-$3414[bp]
 test	ax,ax
 jne 	.80
 .81:
-! 499         return -4;
+! 515         return -4;
 mov	ax,*-4
 lea	sp,-4[bp]
 pop	si
@@ -2084,8 +2090,8 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 500     
-! 501     kStrCopy(name,pcb->name,7);
+! 516     
+! 517     kStrCopy(name,pcb->name,7);
 .80:
 ! Debug: list int = const 7 (used reg = )
 mov	ax,*7
@@ -2099,32 +2105,32 @@ push	4[bp]
 call	_kStrCopy
 add	sp,*6
 !BCC_EOS
-! 502 
-! 503     setKernelDataSegment();
+! 518 
+! 519     setKernelDataSegment();
 ! Debug: func () void = setKernelDataSegment+0 (used reg = )
 call	_setKernelDataSegment
 !BCC_EOS
-! 504     pcb->state = 4 ;
+! 520     pcb->state = 4 ;
 mov	bx,-$3414[bp]
 ! Debug: eq int = const 4 to int = [bx+8] (used reg = )
 mov	ax,*4
 mov	8[bx],ax
 !BCC_EOS
-! 505     pcb->segment = segment;
+! 521     pcb->segment = segment;
 mov	bx,-$3414[bp]
 ! Debug: eq int segment = [S+$3416-$3414] to int = [bx+$A] (used reg = )
 mov	ax,-$3412[bp]
 mov	$A[bx],ax
 !BCC_EOS
-! 506     pcb->stackPointer = 0xff00;
+! 522     pcb->stackPointer = 0xff00;
 mov	bx,-$3414[bp]
 ! Debug: eq unsigned int = const $FF00 to int = [bx+$C] (used reg = )
 mov	ax,#$FF00
 mov	$C[bx],ax
 !BCC_EOS
-! 507 
-! 508     
-! 509     initializeProgram(segment);
+! 523 
+! 524     
+! 525     initializeProgram(segment);
 ! Debug: list int segment = [S+$3416-$3414] (used reg = )
 push	-$3412[bp]
 ! Debug: func () int = initializeProgram+0 (used reg = )
@@ -2132,19 +2138,19 @@ call	_initializeProgram
 inc	sp
 inc	sp
 !BCC_EOS
-! 510 
-! 511     
-! 512     disableInterrupts(); 
+! 526 
+! 527     
+! 528     disableInterrupts(); 
 ! Debug: func () void = disableInterrupts+0 (used reg = )
 call	_disableInterrupts
 !BCC_EOS
-! 513     if (blockopt)
+! 529     if (blockopt)
 mov	ax,6[bp]
 test	ax,ax
 je  	.82
 .83:
-! 514     {
-! 515         block(segi);
+! 530     {
+! 531         block(segi);
 ! Debug: list int segi = [S+$3416-$3412] (used reg = )
 push	-$3410[bp]
 ! Debug: func () int = block+0 (used reg = )
@@ -2152,8 +2158,8 @@ call	_block
 inc	sp
 inc	sp
 !BCC_EOS
-! 516     }
-! 517     addToReady(pcb);
+! 532     }
+! 533     addToReady(pcb);
 .82:
 ! Debug: list * struct PCB pcb = [S+$3416-$3416] (used reg = )
 push	-$3414[bp]
@@ -2162,27 +2168,27 @@ call	_addToReady
 inc	sp
 inc	sp
 !BCC_EOS
-! 518     restoreInterrupts();
+! 534     restoreInterrupts();
 ! Debug: func () int = restoreInterrupts+0 (used reg = )
 call	_restoreInterrupts
 !BCC_EOS
-! 519 
-! 520     restoreDataSegment();
+! 535 
+! 536     restoreDataSegment();
 ! Debug: func () void = restoreDataSegment+0 (used reg = )
 call	_restoreDataSegment
 !BCC_EOS
-! 521 
-! 522     if (blockopt)
+! 537 
+! 538     if (blockopt)
 mov	ax,6[bp]
 test	ax,ax
 je  	.84
 .85:
-! 523         yield();
+! 539         yield();
 ! Debug: func () void = yield+0 (used reg = )
 call	_yield
 !BCC_EOS
-! 524 
-! 525     return 1;
+! 540 
+! 541     return 1;
 .84:
 mov	ax,*1
 lea	sp,-4[bp]
@@ -2191,18 +2197,18 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 526 }
-! 527 
-! 528 
-! 529 
-! 530  
-! 531 void yield()
+! 542 }
+! 543 
+! 544 
+! 545 
+! 546  
+! 547 void yield()
 ! Register BX used in function executeProgram
-! 532 {
+! 548 {
 export	_yield
 _yield:
-! 533     
-! 534     interrupt(0x08,0,0,0,0);
+! 549     
+! 550     interrupt(0x08,0,0,0,0);
 push	bp
 mov	bp,sp
 push	di
@@ -2226,30 +2232,30 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 535 }
+! 551 }
 pop	si
 pop	di
 pop	bp
 ret
-! 536 # 636
-! 636  
-! 637 int handleInterrupt21(ax,bx,cx,dx)
-! 638 # 637 "./src/kernel.c"
-! 637 int ax;
+! 552 # 652
+! 652  
+! 653 int handleInterrupt21(ax,bx,cx,dx)
+! 654 # 653 "./src/kernel.c"
+! 653 int ax;
 export	_handleInterrupt21
 _handleInterrupt21:
 !BCC_EOS
-! 638 # 637 "./src/kernel.c"
-! 637 int bx;
+! 654 # 653 "./src/kernel.c"
+! 653 int bx;
 !BCC_EOS
-! 638 # 637 "./src/kernel.c"
-! 637 int cx;
+! 654 # 653 "./src/kernel.c"
+! 653 int cx;
 !BCC_EOS
-! 638 # 637 "./src/kernel.c"
-! 637 int dx;
+! 654 # 653 "./src/kernel.c"
+! 653 int dx;
 !BCC_EOS
-! 638 {
-! 639     int ret = -1;
+! 654 {
+! 655     int ret = -1;
 push	bp
 mov	bp,sp
 push	di
@@ -2260,24 +2266,24 @@ dec	sp
 mov	ax,*-1
 mov	-6[bp],ax
 !BCC_EOS
-! 640     int i = 0;
+! 656     int i = 0;
 dec	sp
 dec	sp
 ! Debug: eq int = const 0 to int i = [S+$A-$A] (used reg = )
 xor	ax,ax
 mov	-8[bp],ax
 !BCC_EOS
-! 641     char buffer[20];
+! 657     char buffer[20];
 !BCC_EOS
-! 642 
-! 643     switch(ax)
+! 658 
+! 659     switch(ax)
 add	sp,*-$14
 mov	ax,4[bp]
-! 644     {
+! 660     {
 br 	.88
-! 645         case 0x00:
-! 646             
-! 647             ret = printString((char*)bx);
+! 661         case 0x00:
+! 662             
+! 663             ret = printString((char*)bx);
 .89:
 ! Debug: list * char bx = [S+$1E+4] (used reg = )
 push	6[bp]
@@ -2288,14 +2294,15 @@ inc	sp
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 648             break;
+! 664             break;
 br 	.86
 !BCC_EOS
-! 649 
-! 650         case 0xff:
-! 651             
-! 652             putStr((char*)bx,strlen((char*)bx),cx,(dx >> 8)& 0xff,dx & 0xff);
+! 665 
+! 666         case 0xff:
+! 667             
+! 668             putStr((char*)bx,strlen((
 .8A:
+! 668 char*)bx),cx,(dx >> 8)& 0xff,dx & 0xff);
 ! Debug: and int = const $FF to int dx = [S+$1E+8] (used reg = )
 mov	al,$A[bp]
 ! Debug: list char = al+0 (used reg = )
@@ -2325,19 +2332,18 @@ push	6[bp]
 call	_putStr
 add	sp,*$A
 !BCC_EOS
-! 653  
-! 653            ret = 1;
+! 669             ret = 1;
 ! Debug: eq int = const 1 to int ret = [S+$1E-8] (used reg = )
 mov	ax,*1
 mov	-6[bp],ax
 !BCC_EOS
-! 654             break;
+! 670             break;
 br 	.86
 !BCC_EOS
-! 655 
-! 656         case 0xa1:
-! 657             
-! 658             ret = sleep(bx);
+! 671 
+! 672         case 0xa1:
+! 673             
+! 674             ret = sleep(bx);
 .8B:
 ! Debug: list int bx = [S+$1E+4] (used reg = )
 push	6[bp]
@@ -2348,13 +2354,13 @@ inc	sp
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 659             break;
+! 675             break;
 br 	.86
 !BCC_EOS
-! 660 
-! 661         case 0x0b:
-! 662             
-! 663             ret = kill(bx);
+! 676 
+! 677         case 0x0b:
+! 678             
+! 679             ret = kill(bx);
 .8C:
 ! Debug: list int bx = [S+$1E+4] (used reg = )
 push	6[bp]
@@ -2365,54 +2371,54 @@ inc	sp
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 664             break;
+! 680             break;
 br 	.86
 !BCC_EOS
-! 665 
-! 666         case 0x0a:
-! 667             
-! 668             showProcesses();
+! 681 
+! 682         case 0x0a:
+! 683             
+! 684             showProcesses();
 .8D:
 ! Debug: func () void = showProcesses+0 (used reg = )
 call	_showProcesses
 !BCC_EOS
-! 669             ret = 1;
+! 685             ret = 1;
 ! Debug: eq int = const 1 to int ret = [S+$1E-8] (used reg = )
 mov	ax,*1
 mov	-6[bp],ax
 !BCC_EOS
-! 670             break;
+! 686             break;
 br 	.86
 !BCC_EOS
-! 671 
-! 672         case 0x09:
-! 673             
-! 674             yield();
+! 687 
+! 688         case 0x09:
+! 689             
+! 690             yield();
 .8E:
 ! Debug: func () void = yield+0 (used reg = )
 call	_yield
 !BCC_EOS
-! 675             ret = 1;
+! 691             ret = 1;
 ! Debug: eq int = const 1 to int ret = [S+$1E-8] (used reg = )
 mov	ax,*1
 mov	-6[bp],ax
 !BCC_EOS
-! 676             break;
+! 692             break;
 br 	.86
 !BCC_EOS
-! 677 
-! 678         case 0x03:
-! 679             
-! 680             
-! 681             
-! 682             for (i = 0; i < 17; ++i)
+! 693 
+! 694         case 0x03:
+! 695             
+! 696             
+! 697             
+! 698             for (i = 0; i < 17; ++i)
 .8F:
 ! Debug: eq int = const 0 to int i = [S+$1E-$A] (used reg = )
 xor	ax,ax
 mov	-8[bp],ax
 !BCC_EOS
 !BCC_EOS
-! 683                 buffer[i] = loadCharKernel("__DISK_DIRECTORY"+i);
+! 699                 buffer[i] = loadCharKernel("__DISK_DIRECTORY"+i);
 jmp .92
 .93:
 ! Debug: ptradd int i = [S+$1E-$A] to [$11] char = .94+0 (used reg = )
@@ -2436,8 +2442,8 @@ mov	-$1C[bx],al
 inc	sp
 inc	sp
 !BCC_EOS
-! 684 
-! 685             if (strcmp((char*)bx,buffer)) {
+! 700 
+! 701             if (strcmp((char*)bx,buffer)) {
 .91:
 ! Debug: preinc int i = [S+$1E-$A] (used reg = )
 mov	ax,-8[bp]
@@ -2461,7 +2467,7 @@ add	sp,*4
 test	ax,ax
 je  	.96
 .97:
-! 686                 ret = readSector((char*)cx,2);
+! 702                 ret = readSector((char*)cx,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -2473,10 +2479,10 @@ add	sp,*4
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 687             } else {
+! 703             } else {
 jmp .98
 .96:
-! 688                 ret = readFile((char*)bx,(char*)cx,(int)dx);
+! 704                 ret = readFile((char*)bx,(char*)cx,(int)dx);
 ! Debug: list int dx = [S+$1E+8] (used reg = )
 push	$A[bp]
 ! Debug: list * char cx = [S+$20+6] (used reg = )
@@ -2489,15 +2495,15 @@ add	sp,*6
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 689             }
-! 690             break;
+! 705             }
+! 706             break;
 .98:
 br 	.86
 !BCC_EOS
-! 691 
-! 692         case 0x04:
-! 693             
-! 694             ret = executeProgram((char*)bx,cx);
+! 707 
+! 708         case 0x04:
+! 709             
+! 710             ret = executeProgram((char*)bx,cx);
 .99:
 ! Debug: list int cx = [S+$1E+6] (used reg = )
 push	8[bp]
@@ -2509,24 +2515,24 @@ add	sp,*4
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 695             break;
+! 711             break;
 br 	.86
 !BCC_EOS
-! 696 
-! 697         case 0x05:
-! 698             
-! 699             terminate(); 
+! 712 
+! 713         case 0x05:
+! 714             
+! 715             terminate(); 
 .9A:
 ! Debug: func () void = terminate+0 (used reg = )
 call	_terminate
 !BCC_EOS
-! 700             break;
+! 716             break;
 br 	.86
 !BCC_EOS
-! 701 
-! 702         case 0x07:
-! 703             
-! 704             ret = deleteFile((char*)bx);
+! 717 
+! 718         case 0x07:
+! 719             
+! 720             ret = deleteFile((char*)bx);
 .9B:
 ! Debug: list * char bx = [S+$1E+4] (used reg = )
 push	6[bp]
@@ -2537,13 +2543,13 @@ inc	sp
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 705             break;
+! 721             break;
 br 	.86
 !BCC_EOS
-! 706 
-! 707         case 0x08:
-! 708             
-! 709             ret = writeFile((char*)bx,(char*)cx,(int)dx);
+! 722 
+! 723         case 0x08:
+! 724             
+! 725             ret = writeFile((char*)bx,(char*)cx,(int)dx);
 .9C:
 ! Debug: list int dx = [S+$1E+8] (used reg = )
 push	$A[bp]
@@ -2557,13 +2563,13 @@ add	sp,*6
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 710             break;
+! 726             break;
 jmp .86
 !BCC_EOS
-! 711 
-! 712         case 0x11:
-! 713             
-! 714             *((char*)bx) = (char) (interrupt(0x16,0,0,0,0)& 0xFF) ;
+! 727 
+! 728         case 0x11:
+! 729             
+! 730             *((char*)bx) = (char) (interrupt(0x16,0,0,0,0)& 0xFF) ;
 .9D:
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
@@ -2589,18 +2595,18 @@ mov	bx,6[bp]
 ! Debug: eq char = al+0 to char = [bx+0] (used reg = )
 mov	[bx],al
 !BCC_EOS
-! 715             ret = 1;
+! 731             ret = 1;
 ! Debug: eq int = const 1 to int ret = [S+$1E-8] (used reg = )
 mov	ax,*1
 mov	-6[bp],ax
 !BCC_EOS
-! 716             break;
+! 732             break;
 jmp .86
 !BCC_EOS
-! 717 
-! 718         case 0x01:
-! 719             
-! 720             ret = readString((char*)bx,cx);
+! 733 
+! 734         case 0x01:
+! 735             
+! 736             ret = readString((char*)bx,cx);
 .9E:
 ! Debug: list int cx = [S+$1E+6] (used reg = )
 push	8[bp]
@@ -2612,12 +2618,12 @@ add	sp,*4
 ! Debug: eq int = ax+0 to int ret = [S+$1E-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 721             break;
+! 737             break;
 jmp .86
 !BCC_EOS
-! 722     }
-! 723 
-! 724     return ret;
+! 738     }
+! 739 
+! 740     return ret;
 jmp .86
 .88:
 sub	ax,*0
@@ -2661,41 +2667,41 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 725 }
-! 726 # 732
-! 732  
-! 733 # 747
-! 747  
-! 748 int writeFile(fname,buffer,sectors)
+! 741 }
+! 742 # 748
+! 748  
+! 749 # 763
+! 763  
+! 764 int writeFile(fname,buffer,sectors)
 ! Register BX used in function handleInterrupt21
-! 749 # 748 "./src/kernel.c"
-! 748 char *fname;
+! 765 # 764 "./src/kernel.c"
+! 764 char *fname;
 export	_writeFile
 _writeFile:
 !BCC_EOS
-! 749 # 748 "./src/kernel.c"
-! 748 char *buffer;
+! 765 # 764 "./src/kernel.c"
+! 764 char *buffer;
 !BCC_EOS
-! 749 # 748 "./src/kernel.c"
-! 748 int sectors;
+! 765 # 764 "./src/kernel.c"
+! 764 int sectors;
 !BCC_EOS
-! 749 {
-! 750     
-! 751     char disk_map[512];
+! 765 {
+! 766     
+! 767     char disk_map[512];
 !BCC_EOS
-! 752     
-! 753     char disk_dir[512];
+! 768     
+! 769     char disk_dir[512];
 !BCC_EOS
-! 754     
-! 755     char file_sectors[26];
+! 770     
+! 771     char file_sectors[26];
 !BCC_EOS
-! 756     
-! 757     char *ptr;
+! 772     
+! 773     char *ptr;
 !BCC_EOS
-! 758     char *mptr;
+! 774     char *mptr;
 !BCC_EOS
-! 759     
-! 760     int   j  = 0;
+! 775     
+! 776     int   j  = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -2705,25 +2711,25 @@ add	sp,#-$420
 xor	ax,ax
 mov	-$424[bp],ax
 !BCC_EOS
-! 761     
-! 762     int byte = 0;
+! 777     
+! 778     int byte = 0;
 dec	sp
 dec	sp
 ! Debug: eq int = const 0 to int byte = [S+$428-$428] (used reg = )
 xor	ax,ax
 mov	-$426[bp],ax
 !BCC_EOS
-! 763     
-! 764     int free_entry = -1;
+! 779     
+! 780     int free_entry = -1;
 dec	sp
 dec	sp
 ! Debug: eq int = const -1 to int free_entry = [S+$42A-$42A] (used reg = )
 mov	ax,*-1
 mov	-$428[bp],ax
 !BCC_EOS
-! 765 
-! 766     
-! 767     readSector(disk_map,1);
+! 781 
+! 782     
+! 783     readSector(disk_map,1);
 ! Debug: list int = const 1 (used reg = )
 mov	ax,*1
 push	ax
@@ -2734,7 +2740,7 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 768     readSector(disk_dir,2);
+! 784     readSector(disk_dir,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -2745,9 +2751,9 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 769 
-! 770     
-! 771     sectors = (sectors < 26 ? sectors : 26);
+! 785 
+! 786     
+! 787     sectors = (sectors < 26 ? sectors : 26);
 ! Debug: lt int = const $1A to int sectors = [S+$42A+6] (used reg = )
 mov	ax,8[bp]
 cmp	ax,*$1A
@@ -2761,20 +2767,20 @@ mov	ax,*$1A
 ! Debug: eq int = ax+0 to int sectors = [S+$42A+6] (used reg = )
 mov	8[bp],ax
 !BCC_EOS
-! 772 
-! 773     
-! 774     
-! 775     
-! 776     
-! 777 
-! 778     
-! 779     for(; byte < 512; byte += 32)
+! 788 
+! 789     
+! 790     
+! 791     
+! 792     
+! 793 
+! 794     
+! 795     for(; byte < 512; byte += 32)
 !BCC_EOS
 !BCC_EOS
-! 780     {
+! 796     {
 jmp .A6
 .A7:
-! 781         if (free_entry < 0 && !*(disk_dir+byte))
+! 797         if (free_entry < 0 && !*(disk_dir+byte))
 ! Debug: lt int = const 0 to int free_entry = [S+$42A-$42A] (used reg = )
 mov	ax,-$428[bp]
 test	ax,ax
@@ -2788,14 +2794,14 @@ mov	al,-$404[bx]
 test	al,al
 jne 	.A8
 .A9:
-! 782             free_entry = byte;
+! 798     
+! 798         free_entry = byte;
 ! Debug: eq int byte = [S+$42A-$428] to int free_entry = [S+$42A-$42A] (used reg = )
 mov	ax,-$426[bp]
 mov	-$428[bp],ax
 !BCC_EOS
-! 783         if (bst
+! 799         if (bstrcmpn(fname,disk_dir + byte,6))
 .A8:
-! 783 rcmpn(fname,disk_dir + byte,6))
 ! Debug: list int = const 6 (used reg = )
 mov	ax,*6
 push	ax
@@ -2815,13 +2821,13 @@ add	sp,*6
 test	ax,ax
 je  	.AB
 .AC:
-! 784             break;
+! 800             break;
 jmp .A4
 !BCC_EOS
-! 785     }
+! 801     }
 .AB:
-! 786 
-! 787     if (byte < 512)
+! 802 
+! 803     if (byte < 512)
 .A5:
 ! Debug: addab int = const $20 to int byte = [S+$42A-$428] (used reg = )
 mov	ax,-$426[bp]
@@ -2839,10 +2845,10 @@ mov	ax,-$426[bp]
 cmp	ax,#$200
 bge 	.AE
 .AF:
-! 788     {
-! 789         
-! 790         
-! 791         ptr  = disk_dir + byte + 6;;
+! 804     {
+! 805         
+! 806         
+! 807         ptr  = disk_dir + byte + 6;;
 ! Debug: ptradd int byte = [S+$42A-$428] to [$200] char disk_dir = S+$42A-$406 (used reg = )
 mov	ax,-$426[bp]
 mov	bx,bp
@@ -2853,21 +2859,21 @@ add	bx,#-$3FE
 mov	-$420[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 792         j = 0;
+! 808         j = 0;
 ! Debug: eq int = const 0 to int j = [S+$42A-$426] (used reg = )
 xor	ax,ax
 mov	-$424[bp],ax
 !BCC_EOS
-! 793         while (j < sectors && *ptr)
-! 794         {
+! 809         while (j < sectors && *ptr)
+! 810         {
 jmp .B1
 .B2:
-! 795             
-! 796             
-! 797             
-! 798             
-! 799             
-! 800             writeSector(buffer + (j++<<9),*(ptr++));
+! 811             
+! 812             
+! 813             
+! 814             
+! 815             
+! 816             writeSector(buffer + (j++<<9),*(ptr++));
 ! Debug: postinc * char ptr = [S+$42A-$422] (used reg = )
 mov	bx,-$420[bp]
 inc	bx
@@ -2893,9 +2899,9 @@ push	ax
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 801         }
-! 802 
-! 803         if (j == sectors)
+! 817         }
+! 818 
+! 819         if (j == sectors)
 .B1:
 ! Debug: lt int sectors = [S+$42A+6] to int j = [S+$42A-$426] (used reg = )
 mov	ax,-$424[bp]
@@ -2913,18 +2919,18 @@ mov	ax,-$424[bp]
 cmp	ax,8[bp]
 jne 	.B5
 .B6:
-! 804         {
-! 805             
-! 806             while (j < 26 && *ptr) {
+! 820         {
+! 821             
+! 822             while (j < 26 && *ptr) {
 jmp .B8
 .B9:
-! 807                 
-! 808                 
-! 809                 
-! 810                 
-! 811                 
-! 812 
-! 813                 disk_map[*ptr] = 0; 
+! 823                 
+! 824                 
+! 825                 
+! 826                 
+! 827                 
+! 828 
+! 829                 disk_map[*ptr] = 0; 
 mov	bx,-$420[bp]
 ! Debug: ptradd char = [bx+0] to [$200] char disk_map = S+$42A-$206 (used reg = )
 mov	al,[bx]
@@ -2935,7 +2941,7 @@ add	bx,ax
 xor	al,al
 mov	-$204[bx],al
 !BCC_EOS
-! 814                 *(ptr++) = 0;       
+! 830                 *(ptr++) = 0;       
 ! Debug: postinc * char ptr = [S+$42A-$422] (used reg = )
 mov	bx,-$420[bp]
 inc	bx
@@ -2944,14 +2950,14 @@ mov	-$420[bp],bx
 xor	al,al
 mov	-1[bx],al
 !BCC_EOS
-! 815                 ++j;
+! 831                 ++j;
 ! Debug: preinc int j = [S+$42A-$426] (used reg = )
 mov	ax,-$424[bp]
 inc	ax
 mov	-$424[bp],ax
 !BCC_EOS
-! 816             }
-! 817         }
+! 832             }
+! 833         }
 .B8:
 ! Debug: lt int = const $1A to int j = [S+$42A-$426] (used reg = )
 mov	ax,-$424[bp]
@@ -2964,9 +2970,9 @@ test	al,al
 jne	.B9
 .BA:
 .B7:
-! 818     }
+! 834     }
 .B5:
-! 819     else if (free_entry < 0)
+! 835     else if (free_entry < 0)
 jmp .BC
 .AE:
 ! Debug: lt int = const 0 to int free_entry = [S+$42A-$42A] (used reg = )
@@ -2974,9 +2980,9 @@ mov	ax,-$428[bp]
 test	ax,ax
 jge 	.BD
 .BE:
-! 820     {
-! 821         
-! 822         return -1;
+! 836     {
+! 837         
+! 838         return -1;
 mov	ax,*-1
 lea	sp,-4[bp]
 pop	si
@@ -2984,14 +2990,14 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 823     }
-! 824     else
-! 825     {
+! 839     }
+! 840     else
+! 841     {
 jmp .BF
 .BD:
-! 826         
-! 827         
-! 828         strcpyn(disk_dir+free_entry,7,fname);
+! 842         
+! 843         
+! 844         strcpyn(disk_dir+free_entry,7,fname);
 ! Debug: list * char fname = [S+$42A+2] (used reg = )
 push	4[bp]
 ! Debug: list int = const 7 (used reg = )
@@ -3009,7 +3015,7 @@ push	bx
 call	_strcpyn
 add	sp,*6
 !BCC_EOS
-! 829         ptr = disk_dir+free_entry+6;
+! 845         ptr = disk_dir+free_entry+6;
 ! Debug: ptradd int free_entry = [S+$42A-$42A] to [$200] char disk_dir = S+$42A-$406 (used reg = )
 mov	ax,-$428[bp]
 mov	bx,bp
@@ -3019,30 +3025,30 @@ add	bx,ax
 add	bx,#-$3FE
 mov	-$420[bp],bx
 !BCC_EOS
-! 830     }
-! 831 
-! 832 
-! 833     
-! 834     mptr = disk_map;
+! 846     }
+! 847 
+! 848 
+! 849     
+! 850     mptr = disk_map;
 .BF:
 .BC:
 ! Debug: eq [$200] char disk_map = S+$42A-$206 to * char mptr = [S+$42A-$424] (used reg = )
 lea	bx,-$204[bp]
 mov	-$422[bp],bx
 !BCC_EOS
-! 835 
-! 836     while (mptr != disk_map + 512 && j < sectors)
-! 837     {
+! 851 
+! 852     while (mptr != disk_map + 512 && j < sectors)
+! 853     {
 jmp .C1
 .C2:
-! 838         if (!*mptr)
+! 854         if (!*mptr)
 mov	bx,-$422[bp]
 mov	al,[bx]
 test	al,al
 jne 	.C3
 .C4:
-! 839         {
-! 840             writeSector(buffer + (j++ << 9),mptr-disk_map);
+! 855         {
+! 856             writeSector(buffer + (j++ << 9),mptr-disk_map);
 ! Debug: ptrsub [$200] char disk_map = S+$42A-$206 to * char mptr = [S+$42A-$424] (used reg = )
 lea	bx,-$204[bp]
 push	bx
@@ -3069,13 +3075,13 @@ push	ax
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 841             *mptr = 0xff;
+! 857             *mptr = 0xff;
 mov	bx,-$422[bp]
 ! Debug: eq int = const $FF to char = [bx+0] (used reg = )
 mov	al,#$FF
 mov	[bx],al
 !BCC_EOS
-! 842             *(ptr++) = mptr - disk_map;
+! 858             *(ptr++) = mptr - disk_map;
 ! Debug: ptrsub [$200] char disk_map = S+$42A-$206 to * char mptr = [S+$42A-$424] (used reg = )
 lea	bx,-$204[bp]
 push	bx
@@ -3094,18 +3100,18 @@ mov	-1[bx],al
 inc	sp
 inc	sp
 !BCC_EOS
-! 843         }
-! 844         ++mptr;
+! 859         }
+! 860         ++mptr;
 .C3:
 ! Debug: preinc * char mptr = [S+$42A-$424] (used reg = )
 mov	bx,-$422[bp]
 inc	bx
 mov	-$422[bp],bx
 !BCC_EOS
-! 845     }
-! 846 
-! 847     
-! 848     if (j < 26)
+! 861     }
+! 862 
+! 863     
+! 864     if (j < 26)
 .C1:
 ! Debug: ne * char disk_map = S+$42A-6 to * char mptr = [S+$42A-$424] (used reg = )
 lea	bx,-4[bp]
@@ -3123,15 +3129,15 @@ mov	ax,-$424[bp]
 cmp	ax,*$1A
 jge 	.C7
 .C8:
-! 849         *ptr = 0;
+! 865         *ptr = 0;
 mov	bx,-$420[bp]
 ! Debug: eq int = const 0 to char = [bx+0] (used reg = )
 xor	al,al
 mov	[bx],al
 !BCC_EOS
-! 850 
-! 851     
-! 852     writeSector(disk_map,1);
+! 866 
+! 867     
+! 868     writeSector(disk_map,1);
 .C7:
 ! Debug: list int = const 1 (used reg = )
 mov	ax,*1
@@ -3143,7 +3149,7 @@ push	bx
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 853     writeSector(disk_dir,2);
+! 869     writeSector(disk_dir,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -3154,8 +3160,8 @@ push	bx
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 854 
-! 855    return j == sectors ? j : -2;
+! 870 
+! 871    return j == sectors ? j : -2;
 ! Debug: logeq int sectors = [S+$42A+6] to int j = [S+$42A-$426] (used reg = )
 mov	ax,-$424[bp]
 cmp	ax,8[bp]
@@ -3173,29 +3179,29 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 856 }
-! 857 
-! 858 
-! 859 
-! 860 int deleteFile(fname)
+! 872 }
+! 873 
+! 874 
+! 875 
+! 876 int deleteFile(fname)
 ! Register BX used in function writeFile
-! 861 # 860 "./src/kernel.c"
-! 860 char *fname;
+! 877 # 876 "./src/kernel.c"
+! 876 char *fname;
 export	_deleteFile
 _deleteFile:
 !BCC_EOS
-! 861 {
-! 862     
-! 863     char disk_map[512];
+! 877 {
+! 878     
+! 879     char disk_map[512];
 !BCC_EOS
-! 864     
-! 865     char disk_dir[512];
+! 880     
+! 881     char disk_dir[512];
 !BCC_EOS
-! 866     
-! 867     char *ptr;
+! 882     
+! 883     char *ptr;
 !BCC_EOS
-! 868     
-! 869     int   j  = 0;
+! 884     
+! 885     int   j  = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -3205,17 +3211,17 @@ add	sp,#-$404
 xor	ax,ax
 mov	-$408[bp],ax
 !BCC_EOS
-! 870     
-! 871     int byte = 0;
+! 886     
+! 887     int byte = 0;
 dec	sp
 dec	sp
 ! Debug: eq int = const 0 to int byte = [S+$40C-$40C] (used reg = )
 xor	ax,ax
 mov	-$40A[bp],ax
 !BCC_EOS
-! 872 
-! 873     
-! 874     readSector(disk_map,1);
+! 888 
+! 889     
+! 890     readSector(disk_map,1);
 ! Debug: list int = const 1 (used reg = )
 mov	ax,*1
 push	ax
@@ -3226,7 +3232,7 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 875     readSector(disk_dir,2);
+! 891     readSector(disk_dir,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -3237,15 +3243,15 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 876 
-! 877     
-! 878     for(; byte < 512; byte += 32)
+! 892 
+! 893     
+! 894     for(; byte < 512; byte += 32)
 !BCC_EOS
 !BCC_EOS
-! 879     {
+! 895     {
 jmp .CE
 .CF:
-! 880         if (bstrcmpn(fname,disk_dir + byte,6))
+! 896         if (bstrcmpn(fname,disk_dir + byte,6))
 ! Debug: list int = const 6 (used reg = )
 mov	ax,*6
 push	ax
@@ -3265,14 +3271,14 @@ add	sp,*6
 test	ax,ax
 je  	.D0
 .D1:
-! 881             break;
+! 897             break;
 jmp .CC
 !BCC_EOS
-! 882     }
+! 898     }
 .D0:
-! 883 
-! 884     
-! 885     if (byte >= 512)
+! 899 
+! 900     
+! 901     if (byte >= 512)
 .CD:
 ! Debug: addab int = const $20 to int byte = [S+$40C-$40C] (used reg = )
 mov	ax,-$40A[bp]
@@ -3290,7 +3296,7 @@ mov	ax,-$40A[bp]
 cmp	ax,#$200
 jl  	.D3
 .D4:
-! 886         return -1;
+! 902         return -1;
 mov	ax,*-1
 lea	sp,-4[bp]
 pop	si
@@ -3298,9 +3304,9 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 887 
-! 888     
-! 889     ptr  = disk_dir + byte + 6;;
+! 903 
+! 904     
+! 905     ptr  = disk_dir + byte + 6;;
 .D3:
 ! Debug: ptradd int byte = [S+$40C-$40C] to [$200] char disk_dir = S+$40C-$406 (used reg = )
 mov	ax,-$40A[bp]
@@ -3312,13 +3318,13 @@ add	bx,#-$3FE
 mov	-$406[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 890     
-! 891     
-! 892     while (j < 26 && *ptr) 
-! 893     {
+! 906     
+! 907     
+! 908     while (j < 26 && *ptr) 
+! 909     {
 jmp .D6
 .D7:
-! 894         disk_map[*(ptr++)] = 0; 
+! 910         disk_map[*(ptr++)] = 0; 
 ! Debug: postinc * char ptr = [S+$40C-$408] (used reg = )
 mov	bx,-$406[bp]
 inc	bx
@@ -3332,10 +3338,10 @@ add	bx,ax
 xor	al,al
 mov	-$204[bx],al
 !BCC_EOS
-! 895     }
-! 896 
-! 897     
-! 898     *(disk_dir + byte) = 0;
+! 911     }
+! 912 
+! 913     
+! 914     *(disk_dir + byte) = 0;
 .D6:
 ! Debug: lt int = const $1A to int j = [S+$40C-$40A] (used reg = )
 mov	ax,-$408[bp]
@@ -3356,9 +3362,9 @@ add	bx,ax
 xor	al,al
 mov	-$404[bx],al
 !BCC_EOS
-! 899 
-! 900     
-! 901     writeSector(disk_map,1);
+! 915 
+! 916     
+! 917     writeSector(disk_map,1);
 ! Debug: list int = const 1 (used reg = )
 mov	ax,*1
 push	ax
@@ -3369,7 +3375,7 @@ push	bx
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 902     writeSector(disk_dir,2);
+! 918     writeSector(disk_dir,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -3380,7 +3386,7 @@ push	bx
 call	_writeSector
 add	sp,*4
 !BCC_EOS
-! 903    return j;
+! 919    return j;
 mov	ax,-$408[bp]
 lea	sp,-4[bp]
 pop	si
@@ -3388,23 +3394,24 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 904 
-! 905 }
-! 906 # 913
-! 913  
-! 914 int writeSector(buf,sector)
+! 920 
+! 921 }
+! 922 # 929
+! 929  
+! 930 int writeSector(buf,sector)
 ! Register BX used in function deleteFile
-! 915 # 914 "./src/kernel.c"
-! 914 char *buf;
+! 931 # 930 "./src/kernel.c"
+! 930 char *buf;
 export	_writeSector
 _writeSector:
 !BCC_EOS
-! 915 # 914 "./src/kernel.c"
-! 914 int sector;
+! 931 # 930 "./src/kernel.c"
+! 930 int sector;
 !BCC_EOS
-! 915 {
-! 916 
-! 917     int q         = sector/18;
+! 931 {
+! 932 
+! 933     int q         =
+! 933  sector/18;
 push	bp
 mov	bp,sp
 push	di
@@ -3419,10 +3426,9 @@ idiv	bx
 ! Debug: eq int = ax+0 to int q = [S+8-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 918     int relsector = sector - q
+! 934     int relsector = sector - q*18 + 1;
 dec	sp
 dec	sp
-! 918 *18 + 1;
 ! Debug: mul int = const $12 to int q = [S+$A-8] (used reg = )
 mov	ax,-6[bp]
 mov	cx,*$12
@@ -3438,7 +3444,7 @@ inc	sp
 inc	ax
 mov	-8[bp],ax
 !BCC_EOS
-! 919     int head      = q & 1;
+! 935     int head      = q & 1;
 dec	sp
 dec	sp
 ! Debug: and int = const 1 to int q = [S+$C-8] (used reg = )
@@ -3448,7 +3454,7 @@ and	al,*1
 xor	ah,ah
 mov	-$A[bp],ax
 !BCC_EOS
-! 920     int track     = sector/36;
+! 936     int track     = sector/36;
 dec	sp
 dec	sp
 ! Debug: div int = const $24 to int sector = [S+$E+4] (used reg = )
@@ -3459,8 +3465,8 @@ idiv	bx
 ! Debug: eq int = ax+0 to int track = [S+$E-$E] (used reg = )
 mov	-$C[bp],ax
 !BCC_EOS
-! 921 
-! 922     interrupt(0x13,((0x03)<< 8)| ((0x01)&  0xff),(int)buf,((track)<< 8)| ((relsector)&  0xff),((head)<< 8)| ((0x00)&  0xff));
+! 937 
+! 938     interrupt(0x13,((0x03)<< 8)| ((0x01)&  0xff),(int)buf,((track)<< 8)| ((relsector)&  0xff),((head)<< 8)| ((0x00)&  0xff));
 ! Debug: sl int = const 8 to int head = [S+$E-$C] (used reg = )
 mov	ax,-$A[bp]
 mov	ah,al
@@ -3494,8 +3500,8 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 923 
-! 924     return 1;
+! 939 
+! 940     return 1;
 mov	ax,*1
 add	sp,*8
 pop	si
@@ -3503,21 +3509,21 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 925 }
-! 926 # 934
-! 934  
-! 935 int printStringn(str,n)
+! 941 }
+! 942 # 950
+! 950  
+! 951 int printStringn(str,n)
 ! Register BX used in function writeSector
-! 936 # 935 "./src/kernel.c"
-! 935 char *str;
+! 952 # 951 "./src/kernel.c"
+! 951 char *str;
 export	_printStringn
 _printStringn:
 !BCC_EOS
-! 936 # 935 "./src/kernel.c"
-! 935 int n;
+! 952 # 951 "./src/kernel.c"
+! 951 int n;
 !BCC_EOS
-! 936 {
-! 937     char *start = str;
+! 952 {
+! 953     char *start = str;
 push	bp
 mov	bp,sp
 push	di
@@ -3528,8 +3534,8 @@ dec	sp
 mov	bx,4[bp]
 mov	-6[bp],bx
 !BCC_EOS
-! 938     while (*str != 0 && n--)
-! 939         PUT_CHAR(*(str++));
+! 954     while (*str != 0 && n--)
+! 955         PUT_CHAR(*(str++));
 jmp .DB
 .DC:
 ! Debug: list int = const 0 (used reg = )
@@ -3560,7 +3566,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 940     return str - start;
+! 956     return str - start;
 .DB:
 mov	bx,4[bp]
 ! Debug: ne int = const 0 to char = [bx+0] (used reg = )
@@ -3587,34 +3593,34 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 941 }
-! 942 # 953
-! 953  
-! 954 int readFile(filename,buf,n)
+! 957 }
+! 958 # 969
+! 969  
+! 970 int readFile(filename,buf,n)
 ! Register BX used in function printStringn
-! 955 # 954 "./src/kernel.c"
-! 954 char *filename;
+! 971 # 970 "./src/kernel.c"
+! 970 char *filename;
 export	_readFile
 _readFile:
 !BCC_EOS
-! 955 # 954 "./src/kernel.c"
-! 954 char *buf;
+! 971 # 970 "./src/kernel.c"
+! 970 char *buf;
 !BCC_EOS
-! 955 # 954 "./src/kernel.c"
-! 954 int n;
+! 971 # 970 "./src/kernel.c"
+! 970 int n;
 !BCC_EOS
-! 955 {
-! 956     
-! 957     char disk_dir[512];
+! 971 {
+! 972     
+! 973     char disk_dir[512];
 !BCC_EOS
-! 958     
-! 959     char sector_data[512];
+! 974     
+! 975     char sector_data[512];
 !BCC_EOS
-! 960     
-! 961     char *ptr;
+! 976     
+! 977     char *ptr;
 !BCC_EOS
-! 962     
-! 963     int   j  = 0;
+! 978     
+! 979     int   j  = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -3624,17 +3630,17 @@ add	sp,#-$404
 xor	ax,ax
 mov	-$408[bp],ax
 !BCC_EOS
-! 964     
-! 965     int byte = 0;
+! 980     
+! 981     int byte = 0;
 dec	sp
 dec	sp
 ! Debug: eq int = const 0 to int byte = [S+$40C-$40C] (used reg = )
 xor	ax,ax
 mov	-$40A[bp],ax
 !BCC_EOS
-! 966 
-! 967     
-! 968     readSector(disk_dir,2);
+! 982 
+! 983     
+! 984     readSector(disk_dir,2);
 ! Debug: list int = const 2 (used reg = )
 mov	ax,*2
 push	ax
@@ -3645,15 +3651,15 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 969 
-! 970     
-! 971     for(; byte < 512; byte += 32)
+! 985 
+! 986     
+! 987     for(; byte < 512; byte += 32)
 !BCC_EOS
 !BCC_EOS
-! 972     {
+! 988     {
 jmp .E1
 .E2:
-! 973         if (bstrcmpn(filename,disk_dir + byte,6))
+! 989         if (bstrcmpn(filename,disk_dir + byte,6))
 ! Debug: list int = const 6 (used reg = )
 mov	ax,*6
 push	ax
@@ -3673,14 +3679,14 @@ add	sp,*6
 test	ax,ax
 je  	.E3
 .E4:
-! 974             break;
+! 990             break;
 jmp .DF
 !BCC_EOS
-! 975     }
+! 991     }
 .E3:
-! 976 
-! 977     
-! 978     if (byte >= 512)
+! 992 
+! 993     
+! 994     if (byte >= 512)
 .E0:
 ! Debug: addab int = const $20 to int byte = [S+$40C-$40C] (used reg = )
 mov	ax,-$40A[bp]
@@ -3698,7 +3704,7 @@ mov	ax,-$40A[bp]
 cmp	ax,#$200
 jl  	.E6
 .E7:
-! 979         return -1;
+! 995         return -1;
 mov	ax,*-1
 lea	sp,-4[bp]
 pop	si
@@ -3706,9 +3712,9 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 980 
-! 981     
-! 982     ptr  = disk_dir + byte + 6;;
+! 996 
+! 997     
+! 998     ptr  = disk_dir + byte + 6;;
 .E6:
 ! Debug: ptradd int byte = [S+$40C-$40C] to [$200] char disk_dir = S+$40C-$206 (used reg = )
 mov	ax,-$40A[bp]
@@ -3720,13 +3726,13 @@ add	bx,#-$1FE
 mov	-$406[bp],bx
 !BCC_EOS
 !BCC_EOS
-! 983     
-! 984     
-! 985     while (n >= 512 && j < 26 && *ptr) 
-! 986     {
+! 999     
+! 1000     
+! 1001     while (n >= 512 && j < 26 && *ptr) 
+! 1002     {
 jmp .E9
 .EA:
-! 987         readSector(buf+512*(j++),*(ptr++));
+! 1003         readSector(buf+512*(j++),*(ptr++));
 ! Debug: postinc * char ptr = [S+$40C-$408] (used reg = )
 mov	bx,-$406[bp]
 inc	bx
@@ -3752,15 +3758,15 @@ push	ax
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 988         n -= 512;
+! 1004         n -= 512;
 ! Debug: subab int = const $200 to int n = [S+$40C+6] (used reg = )
 mov	ax,8[bp]
 add	ax,#-$200
 mov	8[bp],ax
 !BCC_EOS
-! 989     }
-! 990     
-! 991     if (n > 0 && j < 26 && *ptr)
+! 1005     }
+! 1006     
+! 1007     if (n > 0 && j < 26 && *ptr)
 .E9:
 ! Debug: ge int = const $200 to int n = [S+$40C+6] (used reg = )
 mov	ax,8[bp]
@@ -3793,8 +3799,8 @@ mov	al,[bx]
 test	al,al
 je  	.EE
 .EF:
-! 992     {
-! 993         readSector(sector_data,*ptr);
+! 1008     {
+! 1009         readSector(sector_data,*ptr);
 mov	bx,-$406[bp]
 ! Debug: list char = [bx+0] (used reg = )
 mov	al,[bx]
@@ -3807,7 +3813,7 @@ push	bx
 call	_readSector
 add	sp,*4
 !BCC_EOS
-! 994         memcpyn(buf+512*(j++),n,sector_data,512);
+! 1010         memcpyn(buf+512*(j++),n,sector_data,512);
 ! Debug: list int = const $200 (used reg = )
 mov	ax,#$200
 push	ax
@@ -3833,9 +3839,9 @@ push	ax
 call	_memcpyn
 add	sp,*8
 !BCC_EOS
-! 995 
-! 996     }
-! 997     return j;
+! 1011 
+! 1012     }
+! 1013     return j;
 .EE:
 mov	ax,-$408[bp]
 lea	sp,-4[bp]
@@ -3844,27 +3850,27 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 998 }
-! 999 # 1007
-! 1007  
-! 1008 int memcpyn(dst,m,src,n)
+! 1014 }
+! 1015 # 1023
+! 1023  
+! 1024 int memcpyn(dst,m,src,n)
 ! Register BX used in function readFile
-! 1009 # 1008 "./src/kernel.c"
-! 1008 char *dst;
+! 1025 # 1024 "./src/kernel.c"
+! 1024 char *dst;
 export	_memcpyn
 _memcpyn:
 !BCC_EOS
-! 1009 # 1008 "./src/kernel.c"
-! 1008 int m;
+! 1025 # 1024 "./src/kernel.c"
+! 1024 int m;
 !BCC_EOS
-! 1009 # 1008 "./src/kernel.c"
-! 1008 char *src;
+! 1025 # 1024 "./src/kernel.c"
+! 1024 char *src;
 !BCC_EOS
-! 1009 # 1008 "./src/kernel.c"
-! 1008 int n;
+! 1025 # 1024 "./src/kernel.c"
+! 1024 int n;
 !BCC_EOS
-! 1009 {
-! 1010     int k = (m < n ? m : n); 
+! 1025 {
+! 1026     int k = (m < n ? m : n); 
 push	bp
 mov	bp,sp
 push	di
@@ -3884,14 +3890,14 @@ mov	ax,$A[bp]
 ! Debug: eq int = ax+0 to int k = [S+8-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 1011     n = k;
+! 1027     n = k;
 ! Debug: eq int k = [S+8-8] to int n = [S+8+8] (used reg = )
 mov	ax,-6[bp]
 mov	$A[bp],ax
 !BCC_EOS
-! 1012     
-! 1013     while (n--) 
-! 1014         *(dst++) = *(src++);
+! 1028     
+! 1029     while (n--) 
+! 1030         *(dst++) = *(src++);
 jmp .F6
 .F7:
 ! Debug: postinc * char src = [S+8+6] (used reg = )
@@ -3906,8 +3912,8 @@ mov	4[bp],si
 mov	al,-1[bx]
 mov	-1[si],al
 !BCC_EOS
-! 1015 
-! 1016     return n;
+! 1031 
+! 1032     return n;
 .F6:
 ! Debug: postdec int n = [S+8+8] (used reg = )
 mov	ax,$A[bp]
@@ -3925,24 +3931,24 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1017 }
-! 1018 # 1027
-! 1027  
-! 1028 int strcpyn(dst,n,src)
+! 1033 }
+! 1034 # 1043
+! 1043  
+! 1044 int strcpyn(dst,n,src)
 ! Register BX SI used in function memcpyn
-! 1029 # 1028 "./src/kernel.c"
-! 1028 char *dst;
+! 1045 # 1044 "./src/kernel.c"
+! 1044 char *dst;
 export	_strcpyn
 _strcpyn:
 !BCC_EOS
-! 1029 # 1028 "./src/kernel.c"
-! 1028 int n;
+! 1045 # 1044 "./src/kernel.c"
+! 1044 int n;
 !BCC_EOS
-! 1029 # 1028 "./src/kernel.c"
-! 1028 char *src;
+! 1045 # 1044 "./src/kernel.c"
+! 1044 char *src;
 !BCC_EOS
-! 1029 {
-! 1030     char *ptr = dst;
+! 1045 {
+! 1046     char *ptr = dst;
 push	bp
 mov	bp,sp
 push	di
@@ -3953,8 +3959,8 @@ dec	sp
 mov	bx,4[bp]
 mov	-6[bp],bx
 !BCC_EOS
-! 1031     while (*src && --n)
-! 1032         *(ptr++) = *(src++);
+! 1047     while (*src && --n)
+! 1048         *(ptr++) = *(src++);
 jmp .FA
 .FB:
 ! Debug: postinc * char src = [S+8+6] (used reg = )
@@ -3969,7 +3975,7 @@ mov	-6[bp],si
 mov	al,-1[bx]
 mov	-1[si],al
 !BCC_EOS
-! 1033     *ptr = 0;
+! 1049     *ptr = 0;
 .FA:
 mov	bx,8[bp]
 mov	al,[bx]
@@ -3989,8 +3995,8 @@ mov	bx,-6[bp]
 xor	al,al
 mov	[bx],al
 !BCC_EOS
-! 1034 
-! 1035     return ptr - dst;
+! 1050 
+! 1051     return ptr - dst;
 ! Debug: ptrsub * char dst = [S+8+2] to * char ptr = [S+8-8] (used reg = )
 mov	ax,-6[bp]
 sub	ax,4[bp]
@@ -4002,33 +4008,33 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1036 }
-! 1037 # 1044
-! 1044  
-! 1045 int strcmpn(a,b,n)
+! 1052 }
+! 1053 # 1060
+! 1060  
+! 1061 int strcmpn(a,b,n)
 ! Register BX SI used in function strcpyn
-! 1046 # 1045 "./src/kernel.c"
-! 1045 char *a;
+! 1062 # 1061 "./src/kernel.c"
+! 1061 char *a;
 export	_strcmpn
 _strcmpn:
 !BCC_EOS
-! 1046 # 1045 "./src/kernel.c"
-! 1045 char *b;
+! 1062 # 1061 "./src/kernel.c"
+! 1061 char *b;
 !BCC_EOS
-! 1046 # 1045 "./src/kernel.c"
-! 1045 int n;
+! 1062 # 1061 "./src/kernel.c"
+! 1061 int n;
 !BCC_EOS
-! 1046 # 1045 "./src/kernel.c"
-! 1045 {
-! 1046     
-! 1047     while (n-- && *a && *b) {
+! 1062 # 1061 "./src/kernel.c"
+! 1061 {
+! 1062     
+! 1063     while (n-- && *a && *b) {
 push	bp
 mov	bp,sp
 push	di
 push	si
 jmp .FF
 .100:
-! 1048         if (*(a++)!= *(b++))
+! 1064         if (*(a++)!= *(b++))
 ! Debug: postinc * char b = [S+6+4] (used reg = )
 mov	bx,6[bp]
 inc	bx
@@ -4042,18 +4048,18 @@ mov	al,-1[si]
 cmp	al,-1[bx]
 je  	.101
 .102:
-! 1049             return 0; 
+! 1065             return 0; 
 xor	ax,ax
 pop	si
 pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1050     }
+! 1066     }
 .101:
-! 1051     
-! 1052     
-! 1053     return n < 0 || *a == *b;
+! 1067     
+! 1068     
+! 1069     return n < 0 || *a =
 .FF:
 ! Debug: postdec int n = [S+6+6] (used reg = )
 mov	ax,8[bp]
@@ -4073,6 +4079,7 @@ test	al,al
 jne	.100
 .103:
 .FE:
+! 1069 = *b;
 ! Debug: lt int = const 0 to int n = [S+6+6] (used reg = )
 mov	ax,8[bp]
 test	ax,ax
@@ -4097,21 +4104,20 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1054 }
-! 1055 # 1061
-! 1061  
-! 1062 # 1067
-! 1067  
-! 1068 int printString(
+! 1070 }
+! 1071 # 1077
+! 1077  
+! 1078 # 1083
+! 1083  
+! 1084 int printString(str)
 ! Register BX SI used in function strcmpn
-! 1068 str)
-! 1069 # 1068 "./src/kernel.c"
-! 1068 char *str;
+! 1085 # 1084 "./src/kernel.c"
+! 1084 char *str;
 export	_printString
 _printString:
 !BCC_EOS
-! 1069 {
-! 1070     char *start = str;
+! 1085 {
+! 1086     char *start = str;
 push	bp
 mov	bp,sp
 push	di
@@ -4122,8 +4128,8 @@ dec	sp
 mov	bx,4[bp]
 mov	-6[bp],bx
 !BCC_EOS
-! 1071     while (*str != 0)
-! 1072         PUT_CHAR(*(str++));
+! 1087     while (*str != 0)
+! 1088         PUT_CHAR(*(str++));
 jmp .10B
 .10C:
 ! Debug: list int = const 0 (used reg = )
@@ -4154,7 +4160,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1073     return str - start;
+! 1089     return str - start;
 .10B:
 mov	bx,4[bp]
 ! Debug: ne int = const 0 to char = [bx+0] (used reg = )
@@ -4174,21 +4180,21 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1074 }
-! 1075 # 1087
-! 1087  
-! 1088 int readString(buf,n)
+! 1090 }
+! 1091 # 1103
+! 1103  
+! 1104 int readString(buf,n)
 ! Register BX used in function printString
-! 1089 # 1088 "./src/kernel.c"
-! 1088 char *buf;
+! 1105 # 1104 "./src/kernel.c"
+! 1104 char *buf;
 export	_readString
 _readString:
 !BCC_EOS
-! 1089 # 1088 "./src/kernel.c"
-! 1088 int n;
+! 1105 # 1104 "./src/kernel.c"
+! 1104 int n;
 !BCC_EOS
-! 1089 {
-! 1090     char *start = buf;
+! 1105 {
+! 1106     char *start = buf;
 push	bp
 mov	bp,sp
 push	di
@@ -4199,7 +4205,7 @@ dec	sp
 mov	bx,4[bp]
 mov	-6[bp],bx
 !BCC_EOS
-! 1091     char *end   = buf + n-1;
+! 1107     char *end   = buf + n-1;
 dec	sp
 dec	sp
 ! Debug: ptradd int n = [S+$A+4] to * char buf = [S+$A+2] (used reg = )
@@ -4210,36 +4216,36 @@ add	ax,4[bp]
 dec	ax
 mov	-8[bp],ax
 !BCC_EOS
-! 1092     char c;
+! 1108     char c;
 !BCC_EOS
-! 1093 
-! 1094     while ((c = (interrupt(0x16,0,0,0,0)& 0xFF))!= '\r')
+! 1109 
+! 1110     while ((c = (interrupt(0x16,0,0,0,0)& 0xFF))!= '\r')
 dec	sp
 dec	sp
-! 1095     {
+! 1111     {
 br 	.10F
 .110:
-! 1096         if (c == 0x08)
+! 1112         if (c == 0x08)
 ! Debug: logeq int = const 8 to char c = [S+$C-$B] (used reg = )
 mov	al,-9[bp]
 cmp	al,*8
 jne 	.111
 .112:
-! 1097         {
-! 1098             if (buf != start)
+! 1113         {
+! 1114             if (buf != start)
 ! Debug: ne * char start = [S+$C-8] to * char buf = [S+$C+2] (used reg = )
 mov	bx,4[bp]
 cmp	bx,-6[bp]
 je  	.113
 .114:
-! 1099             {
-! 1100                 --buf;
+! 1115             {
+! 1116                 --buf;
 ! Debug: predec * char buf = [S+$C+2] (used reg = )
 mov	bx,4[bp]
 dec	bx
 mov	4[bp],bx
 !BCC_EOS
-! 1101                 PUT_CHAR(0x08);
+! 1117                 PUT_CHAR(0x08);
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
 push	ax
@@ -4259,7 +4265,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1102                 PUT_CHAR(' ');
+! 1118                 PUT_CHAR(' ');
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
 push	ax
@@ -4279,7 +4285,7 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1103                 PUT_CHAR(0x08);
+! 1119                 PUT_CHAR(0x08);
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
 push	ax
@@ -4299,10 +4305,10 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1104             }
-! 1105         }
+! 1120             }
+! 1121         }
 .113:
-! 1106         else if (buf != end)
+! 1122         else if (buf != end)
 jmp .115
 .111:
 ! Debug: ne * char end = [S+$C-$A] to * char buf = [S+$C+2] (used reg = )
@@ -4310,14 +4316,14 @@ mov	bx,4[bp]
 cmp	bx,-8[bp]
 je  	.116
 .117:
-! 1107         {
-! 1108             *buf = c;
+! 1123         {
+! 1124             *buf = c;
 mov	bx,4[bp]
 ! Debug: eq char c = [S+$C-$B] to char = [bx+0] (used reg = )
 mov	al,-9[bp]
 mov	[bx],al
 !BCC_EOS
-! 1109             PUT_CHAR(c);
+! 1125             PUT_CHAR(c);
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
 push	ax
@@ -4342,17 +4348,17 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1110             ++buf;
+! 1126             ++buf;
 ! Debug: preinc * char buf = [S+$C+2] (used reg = )
 mov	bx,4[bp]
 inc	bx
 mov	4[bp],bx
 !BCC_EOS
-! 1111         }
-! 1112     }
+! 1127         }
+! 1128     }
 .116:
 .115:
-! 1113     *buf = 0;
+! 1129     *buf = 0;
 .10F:
 ! Debug: list int = const 0 (used reg = )
 xor	ax,ax
@@ -4385,7 +4391,7 @@ mov	bx,4[bp]
 xor	al,al
 mov	[bx],al
 !BCC_EOS
-! 1114     return buf - start;
+! 1130     return buf - start;
 ! Debug: ptrsub * char start = [S+$C-8] to * char buf = [S+$C+2] (used reg = )
 mov	ax,4[bp]
 sub	ax,-6[bp]
@@ -4396,21 +4402,21 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1115 }
-! 1116 # 1121
-! 1121  
-! 1122 int printInt(x)
+! 1131 }
+! 1132 # 1137
+! 1137  
+! 1138 int printInt(x)
 ! Register BX used in function readString
-! 1123 # 1122 "./src/kernel.c"
-! 1122 int x;
+! 1139 # 1138 "./src/kernel.c"
+! 1138 int x;
 export	_printInt
 _printInt:
 !BCC_EOS
-! 1123 {
-! 1124     
-! 1125     char buf[12];
+! 1139 {
+! 1140     
+! 1141     char buf[12];
 !BCC_EOS
-! 1126     char *ptr = buf+11; 
+! 1142     char *ptr = buf+11; 
 push	bp
 mov	bp,sp
 push	di
@@ -4420,45 +4426,45 @@ add	sp,*-$E
 lea	bx,-5[bp]
 mov	-$12[bp],bx
 !BCC_EOS
-! 1127     int q, r; 
+! 1143     int q, r; 
 !BCC_EOS
-! 1128     int sign = 1; 
+! 1144     int sign = 1; 
 add	sp,*-6
 ! Debug: eq int = const 1 to int sign = [S+$1A-$1A] (used reg = )
 mov	ax,*1
 mov	-$18[bp],ax
 !BCC_EOS
-! 1129 
-! 1130     
-! 1131     *ptr = 0;
+! 1145 
+! 1146     
+! 1147     *ptr = 0;
 mov	bx,-$12[bp]
 ! Debug: eq int = const 0 to char = [bx+0] (used reg = )
 xor	al,al
 mov	[bx],al
 !BCC_EOS
-! 1132     
-! 1133     if (x < 0)
+! 1148     
+! 1149     if (x < 0)
 ! Debug: lt int = const 0 to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
 test	ax,ax
 jge 	.119
 .11A:
-! 1134     {
-! 1135         
-! 1136         sign = -1;
+! 1150     {
+! 1151         
+! 1152         sign = -1;
 ! Debug: eq int = const -1 to int sign = [S+$1A-$1A] (used reg = )
 mov	ax,*-1
 mov	-$18[bp],ax
 !BCC_EOS
-! 1137         x = -x;
+! 1153         x = -x;
 ! Debug: neg int x = [S+$1A+2] (used reg = )
 xor	ax,ax
 sub	ax,4[bp]
 ! Debug: eq int = ax+0 to int x = [S+$1A+2] (used reg = )
 mov	4[bp],ax
 !BCC_EOS
-! 1138     }
-! 1139     else if (x == 0)
+! 1154     }
+! 1155     else if (x == 0)
 jmp .11B
 .119:
 ! Debug: logeq int = const 0 to int x = [S+$1A+2] (used reg = )
@@ -4466,9 +4472,9 @@ mov	ax,4[bp]
 test	ax,ax
 jne 	.11C
 .11D:
-! 1140     {
-! 1141         
-! 1142         *(--ptr) = '0';
+! 1156     {
+! 1157         
+! 1158         *(--ptr) = '0';
 ! Debug: predec * char ptr = [S+$1A-$14] (used reg = )
 mov	bx,-$12[bp]
 dec	bx
@@ -4477,17 +4483,17 @@ mov	-$12[bp],bx
 mov	al,*$30
 mov	[bx],al
 !BCC_EOS
-! 1143     }
-! 1144 
-! 1145     
-! 1146     while (x > 0)
+! 1159     }
+! 1160 
+! 1161     
+! 1162     while (x > 0)
 .11C:
 .11B:
-! 1147     {
+! 1163     {
 jmp .11F
 .120:
-! 1148         
-! 1149         q = x/10;
+! 1164         
+! 1165         q = x/10;
 ! Debug: div int = const $A to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
 mov	bx,*$A
@@ -4496,7 +4502,7 @@ idiv	bx
 ! Debug: eq int = ax+0 to int q = [S+$1A-$16] (used reg = )
 mov	-$14[bp],ax
 !BCC_EOS
-! 1150         r = x - q*10;
+! 1166         r = x - q*10;
 ! Debug: mul int = const $A to int q = [S+$1A-$16] (used reg = )
 mov	ax,-$14[bp]
 mov	dx,ax
@@ -4513,8 +4519,8 @@ inc	sp
 ! Debug: eq int = ax+0 to int r = [S+$1A-$18] (used reg = )
 mov	-$16[bp],ax
 !BCC_EOS
-! 1151         
-! 1152         *(--ptr) = r + '0';
+! 1167         
+! 1168         *(--ptr) = r + '0';
 ! Debug: add int = const $30 to int r = [S+$1A-$18] (used reg = )
 mov	ax,-$16[bp]
 add	ax,*$30
@@ -4529,14 +4535,14 @@ mov	[bx],al
 inc	sp
 inc	sp
 !BCC_EOS
-! 1153         x = q;
+! 1169         x = q;
 ! Debug: eq int q = [S+$1A-$16] to int x = [S+$1A+2] (used reg = )
 mov	ax,-$14[bp]
 mov	4[bp],ax
 !BCC_EOS
-! 1154     }
-! 1155 
-! 1156     if (sign < 0)
+! 1170     }
+! 1171 
+! 1172     if (sign < 0)
 .11F:
 ! Debug: gt int = const 0 to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
@@ -4549,9 +4555,9 @@ mov	ax,-$18[bp]
 test	ax,ax
 jge 	.122
 .123:
-! 1157     {
-! 1158         
-! 1159         *(--ptr) = '-';
+! 1173     {
+! 1174         
+! 1175         *(--ptr) = '-';
 ! Debug: predec * char ptr = [S+$1A-$14] (used reg = )
 mov	bx,-$12[bp]
 dec	bx
@@ -4560,10 +4566,10 @@ mov	-$12[bp],bx
 mov	al,*$2D
 mov	[bx],al
 !BCC_EOS
-! 1160     }
-! 1161 
-! 1162     
-! 1163     return printString(ptr);
+! 1176     }
+! 1177 
+! 1178     
+! 1179     return printString(ptr);
 .122:
 ! Debug: list * char ptr = [S+$1A-$14] (used reg = )
 push	-$12[bp]
@@ -4578,27 +4584,27 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1164 }
-! 1165 # 1172
-! 1172  
-! 1173 int sprintInt(x,dst,n)
+! 1180 }
+! 1181 # 1188
+! 1188  
+! 1189 int sprintInt(x,dst,n)
 ! Register BX used in function printInt
-! 1174 # 1173 "./src/kernel.c"
-! 1173 int x;
+! 1190 # 1189 "./src/kernel.c"
+! 1189 int x;
 export	_sprintInt
 _sprintInt:
 !BCC_EOS
-! 1174 # 1173 "./src/kernel.c"
-! 1173 char *dst;
+! 1190 # 1189 "./src/kernel.c"
+! 1189 char *dst;
 !BCC_EOS
-! 1174 # 1173 "./src/kernel.c"
-! 1173 int n;
+! 1190 # 1189 "./src/kernel.c"
+! 1189 int n;
 !BCC_EOS
-! 1174 {
-! 1175     
-! 1176     char buf[12];
+! 1190 {
+! 1191     
+! 1192     char buf[12];
 !BCC_EOS
-! 1177     char *ptr = buf+11; 
+! 1193     char *ptr = buf+11; 
 push	bp
 mov	bp,sp
 push	di
@@ -4608,45 +4614,45 @@ add	sp,*-$E
 lea	bx,-5[bp]
 mov	-$12[bp],bx
 !BCC_EOS
-! 1178     int q, r; 
+! 1194     int q, r; 
 !BCC_EOS
-! 1179     int sign = 1; 
+! 1195     int sign = 1; 
 add	sp,*-6
 ! Debug: eq int = const 1 to int sign = [S+$1A-$1A] (used reg = )
 mov	ax,*1
 mov	-$18[bp],ax
 !BCC_EOS
-! 1180 
-! 1181     
-! 1182     *ptr = 0;
+! 1196 
+! 1197     
+! 1198     *ptr = 0;
 mov	bx,-$12[bp]
 ! Debug: eq int = const 0 to char = [bx+0] (used reg = )
 xor	al,al
 mov	[bx],al
 !BCC_EOS
-! 1183     
-! 1184     if (x < 0)
+! 1199     
+! 1200     if (x < 0)
 ! Debug: lt int = const 0 to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
 test	ax,ax
 jge 	.124
 .125:
-! 1185     {
-! 1186         
-! 1187         sign = -1;
+! 1201     {
+! 1202         
+! 1203         sign = -1;
 ! Debug: eq int = const -1 to int sign = [S+$1A-$1A] (used reg = )
 mov	ax,*-1
 mov	-$18[bp],ax
 !BCC_EOS
-! 1188         x = -x;
+! 1204         x = -x;
 ! Debug: neg int x = [S+$1A+2] (used reg = )
 xor	ax,ax
 sub	ax,4[bp]
 ! Debug: eq int = ax+0 to int x = [S+$1A+2] (used reg = )
 mov	4[bp],ax
 !BCC_EOS
-! 1189     }
-! 1190     else if (x == 0)
+! 1205     }
+! 1206     else if (x == 0)
 jmp .126
 .124:
 ! Debug: logeq int = const 0 to int x = [S+$1A+2] (used reg = )
@@ -4654,9 +4660,9 @@ mov	ax,4[bp]
 test	ax,ax
 jne 	.127
 .128:
-! 1191     {
-! 1192         
-! 1193         *(--ptr) = '0';
+! 1207     {
+! 1208         
+! 1209         *(--ptr) = '0';
 ! Debug: predec * char ptr = [S+$1A-$14] (used reg = )
 mov	bx,-$12[bp]
 dec	bx
@@ -4665,17 +4671,17 @@ mov	-$12[bp],bx
 mov	al,*$30
 mov	[bx],al
 !BCC_EOS
-! 1194     }
-! 1195 
-! 1196     
-! 1197     while (x > 0)
+! 1210     }
+! 1211 
+! 1212     
+! 1213     while (x > 0)
 .127:
 .126:
-! 1198     {
+! 1214     {
 jmp .12A
 .12B:
-! 1199         
-! 1200         q = x/10;
+! 1215         
+! 1216         q = x/10;
 ! Debug: div int = const $A to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
 mov	bx,*$A
@@ -4684,7 +4690,7 @@ idiv	bx
 ! Debug: eq int = ax+0 to int q = [S+$1A-$16] (used reg = )
 mov	-$14[bp],ax
 !BCC_EOS
-! 1201         r = x - q*10;
+! 1217         r = x - q*10;
 ! Debug: mul int = const $A to int q = [S+$1A-$16] (used reg = )
 mov	ax,-$14[bp]
 mov	dx,ax
@@ -4701,8 +4707,8 @@ inc	sp
 ! Debug: eq int = ax+0 to int r = [S+$1A-$18] (used reg = )
 mov	-$16[bp],ax
 !BCC_EOS
-! 1202         
-! 1203         *(--ptr) = r + '0';
+! 1218         
+! 1219         *(--ptr) = r + '0';
 ! Debug: add int = const $30 to int r = [S+$1A-$18] (used reg = )
 mov	ax,-$16[bp]
 add	ax,*$30
@@ -4717,14 +4723,14 @@ mov	[bx],al
 inc	sp
 inc	sp
 !BCC_EOS
-! 1204         x = q;
+! 1220         x = q;
 ! Debug: eq int q = [S+$1A-$16] to int x = [S+$1A+2] (used reg = )
 mov	ax,-$14[bp]
 mov	4[bp],ax
 !BCC_EOS
-! 1205     }
-! 1206 
-! 1207     if (sign < 0)
+! 1221     }
+! 1222 
+! 1223     if (sign < 0)
 .12A:
 ! Debug: gt int = const 0 to int x = [S+$1A+2] (used reg = )
 mov	ax,4[bp]
@@ -4737,9 +4743,9 @@ mov	ax,-$18[bp]
 test	ax,ax
 jge 	.12D
 .12E:
-! 1208     {
-! 1209         
-! 1210         *(--ptr) = '-';
+! 1224     {
+! 1225         
+! 1226         *(--ptr) = '-';
 ! Debug: predec * char ptr = [S+$1A-$14] (used reg = )
 mov	bx,-$12[bp]
 dec	bx
@@ -4748,9 +4754,9 @@ mov	-$12[bp],bx
 mov	al,*$2D
 mov	[bx],al
 !BCC_EOS
-! 1211     }
-! 1212 
-! 1213     strcpyn(dst,n,ptr);
+! 1227     }
+! 1228 
+! 1229     strcpyn(dst,n,ptr);
 .12D:
 ! Debug: list * char ptr = [S+$1A-$14] (used reg = )
 push	-$12[bp]
@@ -4762,7 +4768,7 @@ push	6[bp]
 call	_strcpyn
 add	sp,*6
 !BCC_EOS
-! 1214     r = (buf+11) - ptr;
+! 1230     r = (buf+11) - ptr;
 ! Debug: ptrsub * char ptr = [S+$1A-$14] to [$C] char buf = S+$1A-7 (used reg = )
 mov	ax,bp
 add	ax,*-5
@@ -4770,8 +4776,8 @@ sub	ax,-$12[bp]
 ! Debug: eq int = ax+0 to int r = [S+$1A-$18] (used reg = )
 mov	-$16[bp],ax
 !BCC_EOS
-! 1215 
-! 1216     return  n-1 < r ? n-1 : r;
+! 1231 
+! 1232     return  n-1 < r ? n-1 : r;
 ! Debug: sub int = const 1 to int n = [S+$1A+6] (used reg = )
 mov	ax,8[bp]
 ! Debug: lt int r = [S+$1A-$18] to int = ax-1 (used reg = )
@@ -4793,22 +4799,22 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1217 }
-! 1218 # 1226
-! 1226  
-! 1227 int readSector(buf,sector)
+! 1233 }
+! 1234 # 1242
+! 1242  
+! 1243 int readSector(buf,sector)
 ! Register BX used in function sprintInt
-! 1228 # 1227 "./src/kernel.c"
-! 1227 char *buf;
+! 1244 # 1243 "./src/kernel.c"
+! 1242 
+! 1243 char *buf;
 export	_readSector
 _readSector:
 !BCC_EOS
-! 1228 # 1227 "./src/kernel.c"
-! 1227 int se
-! 1227 ctor;
+! 1244 # 1243 "./src/kernel.c"
+! 1243 int sector;
 !BCC_EOS
-! 1228 {
-! 1229     int q         = sector/18;
+! 1244 {
+! 1245     int q         = sector/18;
 push	bp
 mov	bp,sp
 push	di
@@ -4823,7 +4829,7 @@ idiv	bx
 ! Debug: eq int = ax+0 to int q = [S+8-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 1230     int relsector = sector - q*18 + 1;
+! 1246     int relsector = sector - q*18 + 1;
 dec	sp
 dec	sp
 ! Debug: mul int = const $12 to int q = [S+$A-8] (used reg = )
@@ -4841,7 +4847,7 @@ inc	sp
 inc	ax
 mov	-8[bp],ax
 !BCC_EOS
-! 1231     int head      = q & 1;
+! 1247     int head      = q & 1;
 dec	sp
 dec	sp
 ! Debug: and int = const 1 to int q = [S+$C-8] (used reg = )
@@ -4851,7 +4857,7 @@ and	al,*1
 xor	ah,ah
 mov	-$A[bp],ax
 !BCC_EOS
-! 1232     int track     = sector/36;
+! 1248     int track     = sector/36;
 dec	sp
 dec	sp
 ! Debug: div int = const $24 to int sector = [S+$E+4] (used reg = )
@@ -4862,8 +4868,8 @@ idiv	bx
 ! Debug: eq int = ax+0 to int track = [S+$E-$E] (used reg = )
 mov	-$C[bp],ax
 !BCC_EOS
-! 1233 
-! 1234     interrupt(0x13,((0x02)<< 8)| ((0x01)&  0xff),(int)buf,((track)<< 8)| ((relsector)&  0xff),((head)<< 8)| ((0x00)&  0xff));
+! 1249 
+! 1250     interrupt(0x13,((0x02)<< 8)| ((0x01)&  0xff),(int)buf,((track)<< 8)| ((relsector)&  0xff),((head)<< 8)| ((0x00)&  0xff));
 ! Debug: sl int = const 8 to int head = [S+$E-$C] (used reg = )
 mov	ax,-$A[bp]
 mov	ah,al
@@ -4897,8 +4903,8 @@ push	ax
 call	_interrupt
 add	sp,*$A
 !BCC_EOS
-! 1235 
-! 1236     return 1;
+! 1251 
+! 1252     return 1;
 mov	ax,*1
 add	sp,*8
 pop	si
@@ -4906,30 +4912,30 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1237 }
-! 1238 # 1244
-! 1244  
-! 1245 int strcmp(a,b)
+! 1253 }
+! 1254 # 1260
+! 1260  
+! 1261 int strcmp(a,b)
 ! Register BX used in function readSector
-! 1246 # 1245 "./src/kernel.c"
-! 1245 char *a;
+! 1262 # 1261 "./src/kernel.c"
+! 1261 char *a;
 export	_strcmp
 _strcmp:
 !BCC_EOS
-! 1246 # 1245 "./src/kernel.c"
-! 1245 char *b;
+! 1262 # 1261 "./src/kernel.c"
+! 1261 char *b;
 !BCC_EOS
-! 1246 # 1245 "./src/kernel.c"
-! 1245 {
-! 1246     
-! 1247     while (*a && *b) {
+! 1262 # 1261 "./src/kernel.c"
+! 1261 {
+! 1262     
+! 1263     while (*a && *b) {
 push	bp
 mov	bp,sp
 push	di
 push	si
 jmp .133
 .134:
-! 1248         if (*(a++)!= *(b++))
+! 1264         if (*(a++)!= *(b++))
 ! Debug: postinc * char b = [S+6+4] (used reg = )
 mov	bx,6[bp]
 inc	bx
@@ -4943,16 +4949,16 @@ mov	al,-1[si]
 cmp	al,-1[bx]
 je  	.135
 .136:
-! 1249             return 0; 
+! 1265             return 0; 
 xor	ax,ax
 pop	si
 pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1250     }
+! 1266     }
 .135:
-! 1251     return *a == *b; 
+! 1267     return *a == *b; 
 .133:
 mov	bx,4[bp]
 mov	al,[bx]
@@ -4983,32 +4989,32 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1252 }
-! 1253 # 1266
-! 1266  
-! 1267 int bstrcmpn(str,buf,n)
+! 1268 }
+! 1269 # 1282
+! 1282  
+! 1283 int bstrcmpn(str,buf,n)
 ! Register BX SI used in function strcmp
-! 1268 # 1267 "./src/kernel.c"
-! 1267 char *str;
+! 1284 # 1283 "./src/kernel.c"
+! 1283 char *str;
 export	_bstrcmpn
 _bstrcmpn:
 !BCC_EOS
-! 1268 # 1267 "./src/kernel.c"
-! 1267 char *buf;
+! 1284 # 1283 "./src/kernel.c"
+! 1283 char *buf;
 !BCC_EOS
-! 1268 # 1267 "./src/kernel.c"
-! 1267 int n;
+! 1284 # 1283 "./src/kernel.c"
+! 1283 int n;
 !BCC_EOS
-! 1268 {
-! 1269     
-! 1270     while (n-- && *buf && *str) {
+! 1284 {
+! 1285     
+! 1286     while (n-- && *buf && *str) {
 push	bp
 mov	bp,sp
 push	di
 push	si
 jmp .13C
 .13D:
-! 1271         if (*(buf++)!= *(str++))
+! 1287         if (*(buf++)!= *(str++))
 ! Debug: postinc * char str = [S+6+2] (used reg = )
 mov	bx,4[bp]
 inc	bx
@@ -5022,17 +5028,17 @@ mov	al,-1[si]
 cmp	al,-1[bx]
 je  	.13E
 .13F:
-! 1272             return 0; 
+! 1288             return 0; 
 xor	ax,ax
 pop	si
 pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1273     }
+! 1289     }
 .13E:
-! 1274     
-! 1275     if (n < 0)
+! 1290     
+! 1291     if (n < 0)
 .13C:
 ! Debug: postdec int n = [S+6+6] (used reg = )
 mov	ax,8[bp]
@@ -5057,9 +5063,9 @@ mov	ax,8[bp]
 test	ax,ax
 jge 	.143
 .144:
-! 1276     {
-! 1277         
-! 1278         return *str == 0;
+! 1292     {
+! 1293         
+! 1294         return *str == 0;
 mov	bx,4[bp]
 ! Debug: logeq int = const 0 to char = [bx+0] (used reg = )
 mov	al,[bx]
@@ -5077,10 +5083,10 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1279     }
-! 1280 
-! 1281     
-! 1282     return *buf == *str;
+! 1295     }
+! 1296 
+! 1297     
+! 1298     return *buf == *str;
 .143:
 mov	bx,4[bp]
 mov	si,6[bp]
@@ -5100,27 +5106,27 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1283 }
-! 1284 # 1288
-! 1288  
-! 1289 void putChar(c,color,row,col)
+! 1299 }
+! 1300 # 1304
+! 1304  
+! 1305 void putChar(c,color,row,col)
 ! Register BX SI used in function bstrcmpn
-! 1290 # 1289 "./src/kernel.c"
-! 1289 char c;
+! 1306 # 1305 "./src/kernel.c"
+! 1305 char c;
 export	_putChar
 _putChar:
 !BCC_EOS
-! 1290 # 1289 "./src/kernel.c"
-! 1289 char color;
+! 1306 # 1305 "./src/kernel.c"
+! 1305 char color;
 !BCC_EOS
-! 1290 # 1289 "./src/kernel.c"
-! 1289 int row;
+! 1306 # 1305 "./src/kernel.c"
+! 1305 int row;
 !BCC_EOS
-! 1290 # 1289 "./src/kernel.c"
-! 1289 int col;
+! 1306 # 1305 "./src/kernel.c"
+! 1305 int col;
 !BCC_EOS
-! 1290 {
-! 1291     int offset = ((row * 80 + col)<< 1);
+! 1306 {
+! 1307     int offset = ((row * 80 + col)<< 1);
 push	bp
 mov	bp,sp
 push	di
@@ -5138,7 +5144,7 @@ shl	ax,*1
 ! Debug: eq int = ax+0 to int offset = [S+8-8] (used reg = )
 mov	-6[bp],ax
 !BCC_EOS
-! 1292     putInMemory(VMEM_HIGH,0x8000 +offset,c) ;
+! 1308     putInMemory(VMEM_HIGH,0x8000 +offset,c) ;
 ! Debug: list char c = [S+8+2] (used reg = )
 mov	al,4[bp]
 xor	ah,ah
@@ -5156,7 +5162,7 @@ push	ax
 call	_putInMemory
 add	sp,*6
 !BCC_EOS
-! 1293     putInMemory(VMEM_HIGH,0x8000 +offset+1,color) ;
+! 1309     putInMemory(VMEM_HIGH,0x8000 +offset+1,color) ;
 ! Debug: list char color = [S+8+4] (used reg = )
 mov	al,6[bp]
 xor	ah,ah
@@ -5175,35 +5181,35 @@ push	ax
 call	_putInMemory
 add	sp,*6
 !BCC_EOS
-! 1294 }
+! 1310 }
 inc	sp
 inc	sp
 pop	si
 pop	di
 pop	bp
 ret
-! 1295 # 1300
-! 1300  
-! 1301 void putStr(str,maxlen,color,row,col)
-! 1302 # 1301 "./src/kernel.c"
-! 1301 char *str;
+! 1311 # 1316
+! 1316  
+! 1317 void putStr(str,maxlen,color,row,col)
+! 1318 # 1317 "./src/kernel.c"
+! 1317 char *str;
 export	_putStr
 _putStr:
 !BCC_EOS
-! 1302 # 1301 "./src/kernel.c"
-! 1301 int maxlen;
+! 1318 # 1317 "./src/kernel.c"
+! 1317 int maxlen;
 !BCC_EOS
-! 1302 # 1301 "./src/kernel.c"
-! 1301 char color;
+! 1318 # 1317 "./src/kernel.c"
+! 1317 char color;
 !BCC_EOS
-! 1302 # 1301 "./src/kernel.c"
-! 1301 int row;
+! 1318 # 1317 "./src/kernel.c"
+! 1317 int row;
 !BCC_EOS
-! 1302 # 1301 "./src/kernel.c"
-! 1301 int col;
+! 1318 # 1317 "./src/kernel.c"
+! 1317 int col;
 !BCC_EOS
-! 1302 {
-! 1303     int i = 0;
+! 1318 {
+! 1319     int i = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -5214,31 +5220,31 @@ dec	sp
 xor	ax,ax
 mov	-6[bp],ax
 !BCC_EOS
-! 1304     while(*str && i < maxlen)
-! 1305     {
+! 1320     while(*str && i < maxlen)
+! 1321     {
 jmp .14A
 .14B:
-! 1306         if (*str == '\n')
+! 1322         if (*str == '\n')
 mov	bx,4[bp]
 ! Debug: logeq int = const $A to char = [bx+0] (used reg = )
 mov	al,[bx]
 cmp	al,*$A
 jne 	.14C
 .14D:
-! 1307         {
-! 1308             row += 1;
+! 1323         {
+! 1324             row += 1;
 ! Debug: addab int = const 1 to int row = [S+8+8] (used reg = )
 mov	ax,$A[bp]
 inc	ax
 mov	$A[bp],ax
 !BCC_EOS
-! 1309             col = 0;
+! 1325             col = 0;
 ! Debug: eq int = const 0 to int col = [S+8+$A] (used reg = )
 xor	ax,ax
 mov	$C[bp],ax
 !BCC_EOS
-! 1310         }
-! 1311         else if (*str == '\r')
+! 1326         }
+! 1327         else if (*str == '\r')
 jmp .14E
 .14C:
 mov	bx,4[bp]
@@ -5247,18 +5253,18 @@ mov	al,[bx]
 cmp	al,*$D
 jne 	.14F
 .150:
-! 1312         {
-! 1313             col = 0;
+! 1328         {
+! 1329             col = 0;
 ! Debug: eq int = const 0 to int col = [S+8+$A] (used reg = )
 xor	ax,ax
 mov	$C[bp],ax
 !BCC_EOS
-! 1314         }
-! 1315         else 
-! 1316         {
+! 1330         }
+! 1331         else 
+! 1332         {
 jmp .151
 .14F:
-! 1317             putChar(*str,color,row,col);
+! 1333             putChar(*str,color,row,col);
 ! Debug: list int col = [S+8+$A] (used reg = )
 push	$C[bp]
 ! Debug: list int row = [S+$A+8] (used reg = )
@@ -5276,7 +5282,7 @@ push	ax
 call	_putChar
 add	sp,*8
 !BCC_EOS
-! 1318             if ((++col)>= 80 )
+! 1334             if ((++col)>= 80 )
 ! Debug: preinc int col = [S+8+$A] (used reg = )
 mov	ax,$C[bp]
 inc	ax
@@ -5285,23 +5291,23 @@ mov	$C[bp],ax
 cmp	ax,*$50
 jl  	.152
 .153:
-! 1319             {
-! 1320                 ++row;
+! 1335             {
+! 1336                 ++row;
 ! Debug: preinc int row = [S+8+8] (used reg = )
 mov	ax,$A[bp]
 inc	ax
 mov	$A[bp],ax
 !BCC_EOS
-! 1321                 col = 0;
+! 1337                 col = 0;
 ! Debug: eq int = const 0 to int col = [S+8+$A] (used reg = )
 xor	ax,ax
 mov	$C[bp],ax
 !BCC_EOS
-! 1322             }
-! 1323         }
+! 1338             }
+! 1339         }
 .152:
-! 1324 
-! 1325         ++str;
+! 1340 
+! 1341         ++str;
 .151:
 .14E:
 ! Debug: preinc * char str = [S+8+2] (used reg = )
@@ -5309,14 +5315,14 @@ mov	bx,4[bp]
 inc	bx
 mov	4[bp],bx
 !BCC_EOS
-! 1326         ++i;
+! 1342         ++i;
 ! Debug: preinc int i = [S+8-8] (used reg = )
 mov	ax,-6[bp]
 inc	ax
 mov	-6[bp],ax
 !BCC_EOS
-! 1327     }
-! 1328 }
+! 1343     }
+! 1344 }
 .14A:
 mov	bx,4[bp]
 mov	al,[bx]
@@ -5335,18 +5341,18 @@ pop	si
 pop	di
 pop	bp
 ret
-! 1329 
-! 1330 
-! 1331 
-! 1332 int strlen(str)
+! 1345 
+! 1346 
+! 1347 
+! 1348 int strlen(str)
 ! Register BX used in function putStr
-! 1333 # 1332 "./src/kernel.c"
-! 1332 char *str;
+! 1349 # 1348 "./src/kernel.c"
+! 1348 char *str;
 export	_strlen
 _strlen:
 !BCC_EOS
-! 1333 {
-! 1334     int n = 0;
+! 1349 {
+! 1350     int n = 0;
 push	bp
 mov	bp,sp
 push	di
@@ -5357,7 +5363,7 @@ dec	sp
 xor	ax,ax
 mov	-6[bp],ax
 !BCC_EOS
-! 1335     if (!str) return n;
+! 1351     if (!str) return n;
 mov	ax,4[bp]
 test	ax,ax
 jne 	.156
@@ -5370,8 +5376,8 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1336 
-! 1337     while (*str++) n++;
+! 1352 
+! 1353     while (*str++) n++;
 .156:
 jmp .159
 .15A:
@@ -5380,7 +5386,7 @@ mov	ax,-6[bp]
 inc	ax
 mov	-6[bp],ax
 !BCC_EOS
-! 1338     return n;
+! 1354     return n;
 .159:
 ! Debug: postinc * char str = [S+8+2] (used reg = )
 mov	bx,4[bp]
@@ -5399,8 +5405,8 @@ pop	di
 pop	bp
 ret
 !BCC_EOS
-! 1339 }
-! 1340 
+! 1355 }
+! 1356 
 ! Register BX used in function strlen
 .data
 .94:

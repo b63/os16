@@ -14,7 +14,6 @@ int split(char *line, char *cmd, char *arg);
 // utility functions (same as in kernel.c)
 int strcmpn(char *a, char *b, int n);
 int strcmp(char *a, char *b);
-int strcpyn(char *dst, int n, char *src);
 int atoi(char *str, int *x);
 
 void copy_command(char *src, char *dst);
@@ -403,22 +402,4 @@ int strcmp(char *a, char *b) {
             return 0; // short-circuit if not same
     }
     return *a == *b; // both a and b should have hit null
-}
-
-/**
- * Copy at most n-1 bytes to buffer from null-terminated string src.
- * dst will be null-terminated.
- *   dst   destination buffer
- *   n     size of dst
- *   src   source buffer
- *  Returns: the number of bytes copied from src to dst
- */
-int strcpyn(char *dst, int n, char *src)
-{
-    char *ptr = dst;
-    while (*src && --n)
-        *(ptr++) = *(src++);
-    *ptr = 0;
-
-    return ptr - dst;
 }
