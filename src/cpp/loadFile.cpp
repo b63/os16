@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
     loadFil=fopen(argv[1],"r");
     if (loadFil==0)
     {
-        printf("File not found\n");
+        printf("file not found: '%s'\n", argv[1]);
         return 1;
     }
 
