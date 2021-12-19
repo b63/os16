@@ -2,11 +2,11 @@
 Building
 ----
 Ensure the following dependencies are met:
-    - dev86 (tool chain to generate 8086 code): consists of bcc, as86, ld86
-    - nasm
-    - gcc/g++
-    - bochs: for x86 emulation, including GUI debugger
-    - cmake
+- dev86 (tool chain to generate 8086 code): consists of bcc, as86, ld86
+- nasm
+- gcc/g++
+- bochs: for x86 emulation, including GUI debugger
+- cmake
 
 Clone the reposity and build using cmake,
 ```bash
