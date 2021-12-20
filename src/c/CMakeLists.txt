@@ -32,3 +32,15 @@ add_custom_command(TARGET kernel
     COMMAND bcc -I${CMAKE_SOURCE_DIR}/include -ansi -S -o kernelc.asm -C-t ${CMAKE_CURRENT_SOURCE_DIR}/kernel.c
     COMMAND ${CMAKE_SOURCE_DIR}/scripts/check_size.sh $<TARGET_FILE:kernel> 10
     WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+
+macro(mark-executable target)
+    add_custom_command(TARGET ${ARGV0}
+        POST_BUILD
+        COMMAND ${CMAKE_SOURCE_DIR}/scripts/insert_bytes.sh $<TARGET_FILE:${ARGV0}>
+        COMMENT "Marking ${ARGV0} as executable"
+        )
+endmacro()
+
+cmake_language(CALL mark-executable shell)
+cmake_language(CALL mark-executable uprog1)
+cmake_language(CALL mark-executable uprog2)

@@ -19,6 +19,19 @@ To launch bochs, the included `run.sh` script can be used.
 ./run.sh
 ```
 
+To lauch in a virtual machine (using QEMU/KVM), use the included
+script `qemu.sh` which launches a simple x86-64
+virtual machine.
+```bash
+qemu-system-x86_64 -enable-kvm -daemonize \
+    -cpu host,hv_relaxed,hv_spinlocks=0x1fff,hv_vapic,hv_time \
+    -smp cores=1 \
+    -m 256M \
+    -vga qxl \
+    -drive file=$PWD/images/floppy.img,if=floppy,format=raw \
+    -boot a
+```
+
 References
 ----
 1. [https://pages.cs.wisc.edu/~remzi/OSTEP/](https://pages.cs.wisc.edu/~remzi/OSTEP/)

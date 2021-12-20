@@ -199,7 +199,7 @@ vga: extension=vbe, update_freq=30
 # only. In that case the size must match one of the supported types.
 #=======================================================================
 #floppya: 1_44=/dev/fd0, status=inserted
-floppya: 1_44=images/floppya.img, status=inserted
+floppya: 1_44=images/floppy.img, status=inserted
 #floppya: image=../1.44, status=inserted
 #floppya: 1_44=/dev/fd0H1440, status=inserted
 #floppya: 1_2=../1_2, status=inserted

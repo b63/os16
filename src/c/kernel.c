@@ -84,11 +84,19 @@ extern int interrupt(char irq, int ax, int bx, int cx, int dx);
 
 int main()
 {
+    //int i = 0;
+    //interrupt(0x10, VREG(0, 0x13), 0, 0, 0);
+    //for (i = 0; i < 100; ++i)
+    //{
+    //    interrupt(0x10, VREG(0x0c, 0xaf), VREG(0, 0), i, 10);
+    //    interrupt(0x10, VREG(0x0c, 0xaf), VREG(1, 0), i, 10);
+    //}
+    //while(1) {};
     //char buffer[512];
     //int i = 0;
     //char buffer[MAX_FILE];
     // set up IVT
-    makeInterrupt21(); 
+    makeInterrupt21();
     // set up timed interrutps
     makeTimerInterrupt();
 
@@ -100,8 +108,7 @@ int main()
     //strcpyn(buffer, 512, "the kernel is gone and i am here");
     //writeFile("KERNEL", buffer, 1);
     executeProgram("shell");
-
-    while(1) {};
+    while(1){};
 }
 
 

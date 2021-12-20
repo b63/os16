@@ -53,7 +53,7 @@ endmacro()
 
 add_custom_target(floppy ALL)
 cmake_language(CALL append-floppy-tgt bootload 0 1)
-cmake_language(CALL append-floppy-tgt kernel   1 0)
+cmake_language(CALL append-floppy-tgt kernel   3 0)
 cmake_language(CALL append-floppy map "${IMAGE_DIRECTORY}/map.img" 1 1)
 cmake_language(CALL append-floppy dir "${IMAGE_DIRECTORY}/dir.img" 2 1)
 
